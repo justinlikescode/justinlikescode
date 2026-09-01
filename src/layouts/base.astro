@@ -12,7 +12,7 @@ const { siteTitle = 'justin, a dev' } = Astro.props
 ---
 <script is:inline>
     function loadTheme() {
-        localStorage.theme === "light"
+        localStorage.getItem("theme") === "light"
         ? document.documentElement.classList.remove("dark")
         : document.documentElement.classList.add("dark")
     }
@@ -59,7 +59,7 @@ const { siteTitle = 'justin, a dev' } = Astro.props
     })
 </script>
 
-<html lang="en" data-theme>
+<html lang="en" data-theme="light">
     <head>
         <meta charset="utf-8" />
 
