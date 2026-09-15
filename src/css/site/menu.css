@@ -102,7 +102,7 @@ header {
         li a.menu-item {
             &.active {
                 @apply text-green;
-                &::hover {
+                &:hover {
                     @apply text-cyan;
                 }
             }
