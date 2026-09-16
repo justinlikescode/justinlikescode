@@ -22,17 +22,19 @@ const englishLocalization =  await getData('home-page?populate=buttons&populate=
 <script is:inline type="module">
 import { createTimeline } from 'https://esm.sh/animejs';
 
-const timeline = createTimeline({
-        defaults: { duration: 1000 }
-})
+document.addEventListener('astro:page-load', () => {
+    const timeline = createTimeline({
+            defaults: { duration: 500 }
+    })
 
-timeline
-    .add('.portrait-image-image', {
-        x: ["-100%", 0]
-    })
-    .add('.portrait-image-underlay', {
-        scaleY: [0, 1]
-    })
+    timeline
+        .add('.portrait-image-image', {
+            x: ["-100%", 0]
+        })
+        .add('.portrait-image-underlay', {
+            height: [0, "100%"]
+        })
+})
 </script>
 
 <BaseLayout>
