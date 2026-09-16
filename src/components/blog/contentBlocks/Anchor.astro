@@ -1,0 +1,7 @@
+---
+import TextBlock from "./TextBlock.astro"
+const { url, target, children } = Astro.props
+---
+<a href={url} target={target}>
+    {children.map((block: any) => <TextBlock {...block} />)}
+</a>

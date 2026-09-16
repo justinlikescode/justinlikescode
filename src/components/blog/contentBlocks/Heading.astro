@@ -1,0 +1,10 @@
+---
+import TextBlock from "./TextBlock.astro"
+const { level, children: blockContent } = Astro.props
+
+const HeadingTag: string = 'h' + level
+---
+
+<HeadingTag>
+    {blockContent.map((block: any) => <TextBlock {...block} />)}
+</HeadingTag>

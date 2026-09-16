@@ -20,10 +20,10 @@ const menu_items = defineCollection({
         // const menuItemsJson: MenuItemType[] = [
         const menuItemsJson = [
             /*{
-                                                                      label: 'home',
-                                                                      href: '/',
-                                                                      icon: 'nf-custom-home',
-                                                                  },*/
+                                                                            label: 'home',
+                                                                            href: '/',
+                                                                            icon: 'nf-custom-home',
+                                                                        },*/
             {
                 id: "1",
                 label: "about me",
@@ -59,11 +59,12 @@ const blog_posts = defineCollection({
         // console.log(posts);
 
         return posts.map(({ ...post }: any) => {
-            const { documentId, slug, Date: publishDate, Preview, Content, Title } = post;
+            const { documentId, slug, Date: publishDate, Preview, Content, Title, Blog_Content } = post;
             return {
                 id: documentId,
                 slug: slug,
                 content: Content,
+                blogContent: Blog_Content,
                 publishDate: publishDate,
                 preview: Preview,
                 title: Title,

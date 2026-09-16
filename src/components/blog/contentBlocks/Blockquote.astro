@@ -1,0 +1,11 @@
+---
+import TextBlock from "./TextBlock.astro"
+
+const { children } = Astro.props
+---
+<blockquote>
+    {children.map((block: any) => 
+        block.type == 'text' && block.text != '' && <TextBlock {...block} />
+    )}
+</blockquote>
+

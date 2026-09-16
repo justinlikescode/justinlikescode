@@ -1,0 +1,12 @@
+---
+import { Image } from "astro:assets"
+
+const { image } = Astro.props
+const { alternativeText, url } = image
+---
+
+<Image
+    src={url}
+    inferSize={true}
+    alt={alternativeText}
+    />
