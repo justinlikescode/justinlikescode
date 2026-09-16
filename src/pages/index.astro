@@ -19,6 +19,7 @@ import SocialMediaList from "@components/SocialMediaList.astro"
 const englishLocalization =  await getData('home-page?populate=buttons&populate=introImage').then(r => r.json()).then(data => data.data)
 ---
 
+{/*
 <script is:inline type="module">
 import { createTimeline } from 'https://esm.sh/animejs';
 
@@ -35,7 +36,7 @@ document.addEventListener('astro:page-load', () => {
             height: [0, "100%"]
         })
 })
-</script>
+</script> */}
 
 <BaseLayout>
     <Intro data={englishLocalization} />
@@ -47,7 +48,7 @@ document.addEventListener('astro:page-load', () => {
             <h2 class="text-white dark:text-cyan" slot="title">See My Work</h2>
         </SectionHeader>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 max-w-fit mx-auto">
-            <PillButton href={`/portfolio`} class="inverse mx-auto text-3xl border-white after:bg-white! hover:text-primary dark:hover:text-secondary mb-8 md:mb-0" target="_blank">
+            <PillButton href={`/portfolio`} class="inverse mx-auto text-3xl border-white after:bg-white! hover:text-primary dark:hover:text-secondary mb-8 md:mb-0">
                 Online Portfolio
             </PillButton>
             <PillButton href={offlinePortfolio} class="inverse mx-auto text-3xl border-white after:bg-white! hover:text-primary dark:hover:text-secondary" target="_blank">

@@ -35,7 +35,7 @@ const me = API_URL + introImage.formats.large.url
 
             <Fragment set:html={marked.parse(introText)} />
 
-            {buttons.length && buttons.map((button: any) => <PillButton class="flex flex-row text-2xl justify-center items-center mt-8 mx-auto lg:mx-unset" href={button.URL} target="_blank">{button.Label}</PillButton>)}
+            {buttons.length && buttons.map((button: any) => <PillButton class="flex flex-row text-2xl justify-center items-center mt-8 mx-auto lg:mx-unset" href={button.URL}>{button.Label}</PillButton>)}
         </div>
     </div>
 </section>
