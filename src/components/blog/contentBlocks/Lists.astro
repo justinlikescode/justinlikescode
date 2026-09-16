@@ -1,0 +1,14 @@
+---
+import List from './Lists.astro'
+import ListItem from "./ListItem.astro"
+
+const { format, children: items } = Astro.props
+const ListTag = format == 'unordered' ? 'ul' : 'ol'
+---
+<ListTag>
+    {items.map((item: any) => 
+        item.type == 'list-item' && <ListItem {...item} />
+        ||
+        item.type == 'list' && <li><List {...item} /></li>
+    )}
+</ListTag>

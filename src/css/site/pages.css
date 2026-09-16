@@ -18,6 +18,7 @@
         flex-col
         z-50
         items-center
+        container
         mx-auto;
 
     @variant lg {
@@ -49,9 +50,9 @@
 
 .desktop-portrait {
     @apply w-full
-        h-fit
         flex
         flex-col
+        justify-center
         items-center;
 
     @apply hidden;
@@ -63,13 +64,37 @@
     @variant lg {
         @apply w-1/2;
     }
+
     > .portrait-image {
         @apply z-40 mx-auto w-full h-auto;
-        @apply mb-8;
+        @apply my-12 rounded-lg border-primary dark:border-secondary;
+        @apply relative;
 
+        > img {
+            @apply rounded-lg;
+        }
 
-        @variant md {
+        /*
+        &:after {
+            content: ' ';
+            @apply absolute w-full h-full;
+            @apply top-4 left-4;
+            @apply bg-primary dark:bg-secondary rounded-lg;
+            @apply -z-10;
+        }
+        */
+
+        /* @variant md {
             @apply mx-unset mb-0 py-0;
+        } */
+
+        > .portrait-image-underlay {
+            content: ' ';
+            @apply absolute w-full h-0;
+            /* @apply scale-y-0; */
+            @apply top-4 left-4;
+            @apply bg-primary dark:bg-secondary rounded-lg;
+            @apply -z-10;
         }
     } 
 }

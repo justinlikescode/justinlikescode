@@ -1,0 +1,24 @@
+---
+import Blockquote from "./contentBlocks/Blockquote.astro"
+import Code from "./contentBlocks/Code.astro"
+import Heading from "./contentBlocks/Heading.astro"
+import JustinImage from "./contentBlocks/Image.astro"
+import Lists from "./contentBlocks/Lists.astro"
+import Paragraph from "./contentBlocks/Paragraph.astro"
+
+const { blocks } = Astro.props
+
+console.log(blocks)
+// console.log(blocks[0])
+---
+{blocks.map((block: any) =>
+    block.type == 'heading' && <Heading {...block} />
+    ||
+    block.type == 'list' && <Lists {...block} />
+    ||
+    block.type == 'paragraph' && <Paragraph {...block} />
+    ||
+    block.type == 'image' && <JustinImage {...block} />
+    ||
+    block.type == 'quote' && <Blockquote {...block} />
+)}

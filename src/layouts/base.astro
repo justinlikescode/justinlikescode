@@ -26,7 +26,6 @@ const { siteTitle = 'justin, a dev' } = Astro.props
     // it was adding it to the old one and *then* updating the new one
     document.addEventListener("astro:page-load", loadTheme);
     document.addEventListener("astro:before-swap", applyTheme);
-
 </script>
 
 <script is:inline type="module" data-astro-rerun>

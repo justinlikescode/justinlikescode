@@ -7,7 +7,7 @@ import alpinejs from "@astrojs/alpinejs";
 
 import react from "@astrojs/react";
 
-const SITE_URL = process.env.NODE == "dev" ? "https://localhost:4321" : process.env.SITE_URL;
+const SITE_URL = process.env.MODE == "dev" ? "https://localhost:4321" : process.env.SITE_URL;
 // https://astro.build/config
 export default defineConfig({
     output: "static",
@@ -22,7 +22,7 @@ export default defineConfig({
                 hostname: "**.justinlikescode.com",
             },
             {
-                protofol: "http",
+                protocol: "http",
                 hostname: "localhost",
                 port: "1337",
             },

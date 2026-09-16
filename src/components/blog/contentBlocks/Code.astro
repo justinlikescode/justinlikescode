@@ -1,0 +1,9 @@
+---
+import TextBlock from "./TextBlock.astro"
+
+const { children: blockContent } = Astro.props
+---
+<code>
+    {blockContent.map((block: any) => <TextBlock {...block} />)}
+</code>
+

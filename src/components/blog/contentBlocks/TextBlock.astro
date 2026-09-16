@@ -1,0 +1,20 @@
+---
+const { text, code = false, bold = false, italic = false, strikethrough = false } = Astro.props
+
+const tags = []
+
+if(code) tags.push('code')
+if(strikethrough) tags.push('s')
+if(italic) tags.push('em')
+if(bold) tags.push('strong')
+
+function renderTags(text: string, tags: string[]) {
+    if (tags.length === 0) {
+        return text;
+    }
+    return tags.reduce((accumulatedText, tag) => {
+        return `<${tag}>${accumulatedText}</${tag}>`;
+    }, text);
+}
+---
+<Fragment set:html={renderTags(text, tags)} />

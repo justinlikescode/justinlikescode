@@ -19,16 +19,15 @@ if(screenshots[0] == undefined) {
 
 const previewImage = screenshots
     .sort((a: any, b: any) => (a.width < b.width) ? 1 : -1)
-    .slice(0,1)[0]
 
 // console.log(previewImage.formats)
 
 const API_URL = import.meta.env.SECRET_API_URL;
-const screenshotUrl = API_URL + previewImage.formats.medium.url
+const screenshotUrl = API_URL + previewImage[0].formats.medium.url
 ---
 <div class="project-card">
     {screenshotUrl &&
-    <div class="project-card-image">
+    <div class="project-card-image annotateMe" data-annotate-options={`{ "type": "bracket", "color": "var(--color-secondary)", "brackets": [ "left", "right" ] }`}>
         <a href={`/portfolio/${slug}`}>
             <Image
                 src={screenshotUrl}

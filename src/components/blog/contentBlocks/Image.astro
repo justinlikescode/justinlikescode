@@ -1,0 +1,13 @@
+---
+import { Image } from "astro:assets"
+
+const { image } = Astro.props
+const { alternativeText, url } = image
+const cleanedUrl = url.includes('localhost') ? url.replace('http://localhost:1337', import.meta.env.SECRET_API_URL) : url
+---
+
+<Image
+    src={cleanedUrl}
+    inferSize={true}
+    alt={alternativeText}
+    />

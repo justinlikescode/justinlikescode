@@ -1,0 +1,14 @@
+---
+// console.log(Astro.props)
+import List from './Lists.astro' 
+import TextBlock from "./TextBlock.astro"
+import Anchor from "./Anchor.astro"
+const { children:blockContent } = Astro.props
+---
+<li>
+    {blockContent.map((block: any) => 
+        block.type == 'text' && block.text != '' && <TextBlock {...block} />
+        ||
+        block.type == 'link' && <Anchor {...block} />
+    )}
+</li>
