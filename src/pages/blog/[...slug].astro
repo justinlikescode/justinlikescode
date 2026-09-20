@@ -11,11 +11,9 @@
 export const prerender = true
 
 import { getCollection } from 'astro:content';
-import { marked } from 'marked';
-
 import { blogDate } from '@lib/helpers'
-import BaseLayout from "@layouts/base.astro"
 
+import BaseLayout from "@layouts/base.astro"
 import ContentBlocks from "@components/blog/ContentBlocks.astro"
 
 export async function getStaticPaths() {
@@ -32,9 +30,7 @@ export async function getStaticPaths() {
     return paths
 }
 
-const { title, publishDate, content, blogContent } = Astro.props
-
-// console.log(blogContent)
+const { title, publishDate, blogContent } = Astro.props
 ---
 <BaseLayout>
     <article class="h-fit relative" itemscope itemtype="https://schema.org/BlogPosting">
@@ -47,20 +43,12 @@ const { title, publishDate, content, blogContent } = Astro.props
                 </div>
             </div>
         </section>
-        {blogContent == null && 
-        <section class="markdown-content pt-12 z-10">
-            <div class="justin-container mx-auto" itemprop="articleBody">
-                <Fragment set:html={marked.parse(content)} />
-            </div>
-        </section>
-        }
         {blogContent != null &&
         <section class="markdown-content pt-12 z-10">
             <div class="justin-container mx-auto" itemprop="articleBody">
                 <ContentBlocks blocks={blogContent} />
             </div>
-        </section>
-        }
+        </section>}
     </article>
 </BaseLayout>
 

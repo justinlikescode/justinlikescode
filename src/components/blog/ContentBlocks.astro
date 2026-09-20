@@ -8,8 +8,7 @@ import Paragraph from "./contentBlocks/Paragraph.astro"
 
 const { blocks } = Astro.props
 
-console.log(blocks)
-// console.log(blocks[0])
+// console.log(blocks)
 ---
 {blocks.map((block: any) =>
     block.type == 'heading' && <Heading {...block} />
@@ -21,4 +20,6 @@ console.log(blocks)
     block.type == 'image' && <JustinImage {...block} />
     ||
     block.type == 'quote' && <Blockquote {...block} />
+    ||
+    block.type == 'code' && <Code {...block} />
 )}

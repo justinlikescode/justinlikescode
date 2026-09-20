@@ -35,7 +35,7 @@
             px-14;
     }
 
-    > p {
+    .intro-textContent > p {
         @apply text-black text-xl leading-relaxed;
 
         @variant dark {
