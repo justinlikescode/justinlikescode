@@ -1,0 +1,100 @@
+---
+import { Image } from "astro:assets"
+import { marked } from 'marked'
+
+import PillButton from "@components/buttons/PillButton.astro"
+
+const { introImage, Content:introText, Greeting:greetingText, buttons } = Astro.props.data
+
+const API_URL = import.meta.env.SECRET_API_URL;
+const me = API_URL + introImage.formats.large.url
+---
+<script>
+import { createTimeline, splitText, stagger, animate, engine } from 'animejs';
+
+engine.defaults.autoplay = false
+
+const imagePortrait = animate('.portrait-image-image', {
+    x: ["-100%", 0],
+    duration: 350
+})
+
+const imageUnderlay = animate('.portrait-image-underlay', {
+    height: [0, "100%"]
+})
+
+const imageTimeline = createTimeline({
+    defaults: { duration: 350 }
+})
+    .sync(imagePortrait)
+    .sync(imageUnderlay)
+
+
+const { words: introHeader } = splitText('h2.intro-text', { words: true })
+const { words: introText } = splitText('.intro-textContent', { words: true })
+
+const introHeaderAnimation = animate(introHeader, {
+    opacity: [0, 1],
+    y: ['-100%', '0%'],
+    delay: stagger(100),
+    duration: 150,
+})
+
+const introTextAnimation = animate(introText, {
+    opacity: [0, 1],
+    y: ['-100%', '0%'],
+    delay: stagger(25),
+    duration: 50,
+})
+
+const introButtonAnimation = animate('.intro .pill-button', {
+    opacity: [0, 1],
+    scaleY: [0, 1],
+    duration: 250
+})
+
+const textTimeline = createTimeline({
+    defaults: { duration: 150 }
+})
+    .sync(introHeaderAnimation)
+    .sync(introTextAnimation)
+    .sync(introButtonAnimation)
+
+const mainTimeline = createTimeline()
+    .sync(imageTimeline)
+    .sync(textTimeline, '-=700')
+
+mainTimeline.play()
+</script>
+
+<section class="home-hero">
+    <div class="home-hero-container py-8 md:py-0 z-20! overflow-hidden">
+        <div class="desktop-portrait">
+            <div class="portrait-image">
+                <Image
+                    src={me}
+                    inferSize={true}
+                    alt={greetingText}
+                    class="portrait-image-image"
+                    />
+
+                <div class="portrait-image-underlay"></div>
+            </div>
+        </div>
+
+        <div class="intro">
+            <h2 class="text-center md:text-left pb-4 intro-text">{greetingText}</h2>
+
+            <div class="mobile-portrait">
+                <Image src={me} inferSize={true} alt={greetingText} class=""/>
+            </div>
+
+            <div class="intro-textContent">
+                <Fragment set:html={marked.parse(introText)} />
+            </div>
+
+            {buttons.length && buttons.map((button: any) => <PillButton class="flex flex-row text-2xl justify-center items-center mt-8 mx-auto lg:mx-unset" href={button.URL}>{button.Label}</PillButton>)}
+        </div>
+    </div>
+</section>
+

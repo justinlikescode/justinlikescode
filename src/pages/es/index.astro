@@ -2,7 +2,7 @@
 import { getData } from "@lib/helpers";
 
 import BaseLayout from "@layouts/base.astro";
-import Intro from "@components/Intro.astro";
+import Intro from "@components/pageSections/Intro.astro";
 
 const spanishLocalization =  await getData('home-page?locale=es&populate=buttons&populate=introImage').then(r => r.json()).then(data => data.data)
 ---

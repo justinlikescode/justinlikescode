@@ -4,7 +4,7 @@
 
 import type { MenuItemType } from "@lib/types";
 
-import ToggleMode from "@components/ToggleVisualTheme.tsx";
+import ToggleMode from "@components/buttons/ToggleVisualTheme";
 
 export default function MobileMenu({
     items,
@@ -14,12 +14,12 @@ export default function MobileMenu({
     mobileMenu: React.RefObject<HTMLUListElement>;
 }) {
     /*
-            useEffect(() => {
-                mobileMenu.current.addEventListener("click", (e: any) => {
-                    console.log(e.currentTarget);
-                });
-            });
-            */
+              useEffect(() => {
+                  mobileMenu.current.addEventListener("click", (e: any) => {
+                      console.log(e.currentTarget);
+                  });
+              });
+              */
     return (
         <ul
             className="mobile-menu border-b-2 border-b-primary dark:border-b-secondary"

@@ -2,7 +2,7 @@
 export const prerender = true
 import { getCollection } from 'astro:content'
 
-import SectionHeader from '@components/SectionHeader.astro'
+import SectionHeader from '@components/pageSections/SectionHeader.astro'
 import RecentBlogPost from './RecentBlogPost.astro'
 
 const blog_posts = await getCollection('blog')

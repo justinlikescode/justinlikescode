@@ -2,41 +2,21 @@
 import { Image } from "astro:assets"
 import { getData } from "@lib/helpers";
 
-import resume from "/justin-paelmo-resume.pdf"
 import offlinePortfolio from "/justin-paelmo-offline-portfolio.pdf"
-import me from "@images/me.jpeg"
 
 import BaseLayout from "@layouts/base.astro"
 
-import PillButton from "@components/PillButton.astro"
+import PillButton from "@components/buttons/PillButton.astro"
 
-import Intro from "@components/Intro.astro"
+import Intro from "@components/pageSections/Intro.astro"
 import Services from "@components/services/Services.astro"
-import SectionHeader from "@components/SectionHeader.astro"
+import SectionHeader from "@components/pageSections/SectionHeader.astro"
 import BlogPosts from "@components/blog/BlogPosts.astro"
-import SocialMediaList from "@components/SocialMediaList.astro"
+import SocialMediaList from "@components/pageSections/SocialMediaList.astro"
 
 const englishLocalization =  await getData('home-page?populate=buttons&populate=introImage').then(r => r.json()).then(data => data.data)
 ---
 
-{/*
-<script is:inline type="module">
-import { createTimeline } from 'https://esm.sh/animejs';
-
-document.addEventListener('astro:page-load', () => {
-    const timeline = createTimeline({
-            defaults: { duration: 500 }
-    })
-
-    timeline
-        .add('.portrait-image-image', {
-            x: ["-100%", 0]
-        })
-        .add('.portrait-image-underlay', {
-            height: [0, "100%"]
-        })
-})
-</script> */}
 
 <BaseLayout>
     <Intro data={englishLocalization} />
