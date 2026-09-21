@@ -18,7 +18,7 @@ const { siteTitle = 'justin, a dev' } = Astro.props
     }
 
     function applyTheme(event) {
-        event.newDocument.documentElement.dataset.theme = localStorage.theme
+        event.newDocument.documentElement.dataset.theme = localStorage.getItem("theme")
     }
 
     // FIXED: this does not flash bang the user! the old "applyTheme"

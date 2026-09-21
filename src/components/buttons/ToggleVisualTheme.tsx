@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 export default function ToggleVisualTheme({ className }: { className?: string }) {
-    const [theme, setTheme] = useState("light");
+    const [theme, setTheme] = useState(localStorage.getItem("theme"));
 
     function toggleTheme() {
         if (theme === "light") {
