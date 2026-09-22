@@ -5,12 +5,10 @@ import { getCollection } from 'astro:content'
 import SectionHeader from '@components/pageSections/SectionHeader.astro'
 import RecentBlogPost from './RecentBlogPost.astro'
 
-const blog_posts = await getCollection('blog')
+const blogPosts = await getCollection('blog')
 
-
-
-const latestBlogPosts = blog_posts
-    .sort((a, b) => (a.data.publishDate < b.data.publishDate) ? 1 : -1)
+const latestBlogPosts = blogPosts
+    .sort((a, b) => (a.data.publishedAt < b.data.publishedAt) ? 1 : -1)
     .slice(0,3)
 ---
 
@@ -20,7 +18,7 @@ const latestBlogPosts = blog_posts
         <p slot="description">A mix of tutorials, musings, rants, and opinions about web development</p>
     </SectionHeader>
     <div class="blog-posts-container grid grid-cols-1 lg:grid-cols-3 gap-x-16">
-        {latestBlogPosts.map((post: any) => <RecentBlogPost data={post.data} />)}
+        {latestBlogPosts.map((post: any) => <RecentBlogPost {...post} />)}
     </div>
 </section>
 

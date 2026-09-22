@@ -30,7 +30,7 @@ export async function getStaticPaths() {
     return paths
 }
 
-const { title, publishDate, blogContent } = Astro.props
+const { Title:title, Date:publishDate, Blog_Content:blogContent } = Astro.props
 ---
 <BaseLayout>
     <article class="h-fit relative" itemscope itemtype="https://schema.org/BlogPosting">
