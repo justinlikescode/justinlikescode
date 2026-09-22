@@ -4,7 +4,7 @@ export const prerender = true
 import { getCollection } from 'astro:content'
 import { marked } from 'marked'
 
-import { getTechStackIcon, getCategoryIcon } from "@lib/helpers";
+import { getTechStackIcon, getCategoryIcon, categoryTitle } from "@lib/helpers";
 
 import BaseLayout from "@layouts/base.astro"
 import PillButton from '@components/buttons/PillButton.astro'
@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 
     const staticPaths = portfolioProjects.map(({...project}: any) => {
         return {
-            params: { slug: project.data.slug },
+            params: { slug: project.data.slug, category: project.data.category.replace('/', '-') },
             props:{...project.data}
         }
     })
@@ -26,8 +26,7 @@ export async function getStaticPaths() {
     return staticPaths
 }
 
-
-const { title, show_url = true, url: external_url, screenshots, description, techStack, category, preview } = Astro.props
+const { Title:title, show_url = true, url: external_url, screenshots, description, Technology:techStack, category, preview } = Astro.props
 
 const screenshotsSortedWidest = screenshots.sort((a: any, b: any) => (a.width > b.width) ? 1 : -1).reverse()
 
@@ -112,7 +111,7 @@ const API_URL = import.meta.env.SECRET_API_URL;
                     </div>
                     <div class="table-cell pl-4 text-right">
                         <h3 class="text-primary dark:text-cyan items-center mb-6">
-                            <NerdFontIcon icon={getCategoryIcon(category)} /> {category}
+                            <NerdFontIcon icon={getCategoryIcon(category)} /> {categoryTitle(category)}
                         </h3>
                     </div>
                 </div>

@@ -1,11 +1,15 @@
+import qs from "qs";
+
 const API_URL = import.meta.env.SECRET_API_URL;
 const BEARER_TOKEN = `Bearer ${import.meta.env.SECRET_API_TOKEN}`;
 
-// import { marked } from "marked";
-// import { Image } from "astro:assets";
+export async function getData(
+    endpoint: string,
+    endpointParameters: object = {},
+): Promise<Response> {
+    const queryString = qs.stringify(endpointParameters, { encode: false, addQueryPrefix: true });
 
-export async function getData(endpoint: string): Promise<Response> {
-    return await fetch(`${API_URL}/api/${endpoint}`, {
+    return await fetch(`${API_URL}/api/${endpoint + queryString}`, {
         method: "GET",
         headers: {
             Authorization: BEARER_TOKEN,
@@ -81,4 +85,22 @@ export function getTechStackIcon(technology: string): string {
                 return "nf-dev-terminal";
         }
     })();
+}
+
+export function categoryTitle(categoryId: string): string {
+    if (categoryId.includes("2")) {
+        return categoryId
+            .split("2")
+            .map((word) => capitalizeString(word))
+            .join("2");
+    }
+
+    if (!categoryId.includes("/")) {
+        return capitalizeString(categoryId);
+    }
+
+    return categoryId
+        .split("/")
+        .map((word) => capitalizeString(word))
+        .join("/");
 }

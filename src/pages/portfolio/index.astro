@@ -2,7 +2,7 @@
 export const prerender = true
 
 import { getCollection } from 'astro:content';
-import { capitalizeString, getCategoryIcon } from "@lib/helpers";
+import { capitalizeString, getCategoryIcon, categoryTitle } from "@lib/helpers";
 
 import BaseLayout from "@layouts/base.astro";
 import ProjectCard from "@components/projects/ProjectCard.astro";
@@ -35,6 +35,7 @@ projects.map((project: any) => {
 
 const sortedByCount = await sortedByCategory.sort((a: any, b: any) => (a.count > b.count) ? -1 : 1)
 
+/*
 const categoryTitle = (categoryId: string): string => {
     if(categoryId.includes('2')) {
         return categoryId.split('2').map(word => capitalizeString(word)).join('2')
@@ -46,6 +47,9 @@ const categoryTitle = (categoryId: string): string => {
 
     return categoryId.split('/').map(word => capitalizeString(word)).join('/')
 }
+*/
+
+// console.log(sortedByCount)
 ---
 
 <BaseLayout>
@@ -55,7 +59,7 @@ const categoryTitle = (categoryId: string): string => {
             <h2 class="text-4xl mb-8"><NerdFontIcon icon={getCategoryIcon(id)} /> {categoryTitle(id)}</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-15 gap-y-8">
-                {projects.map((project: any) => <ProjectCard project={project}  />)}
+                {projects.map((project: any) => <ProjectCard project={project} category={id.replace('/', '-')}  />)}
             </div>
         </div>
         )}

@@ -17,13 +17,7 @@ function preview(text: string, truncate: number = 0) {
 
 const menu_items = defineCollection({
     loader: async (): Promise<any> => {
-        // const menuItemsJson: MenuItemType[] = [
         const menuItemsJson = [
-            /*{
-                                                                            label: 'home',
-                                                                            href: '/',
-                                                                            icon: 'nf-custom-home',
-                                                                        },*/
             {
                 id: "1",
                 label: "about me",
@@ -50,24 +44,18 @@ const menu_items = defineCollection({
 
 const blog_posts = defineCollection({
     loader: async () => {
-        const data = await getData("blog-posts").then((r) => r.json());
+        const data = await getData("blog-posts")
+            .then((r) => r.json())
+            .then((data) => data.data);
 
-        if (data.data == null) return {}; // if no data then return empty
+        if (data == null) return {}; // if no data then return empty
 
-        const posts = data.data;
-
-        // console.log(posts);
-
-        return posts.map(({ ...post }: any) => {
-            const { documentId, slug, Date: publishDate, Preview, Content, Title, Blog_Content } = post;
+        return data.map((blogPost: any) => {
+            // const { documentId, slug, Date: publishDate, Preview, Content, Title, Blog_Content } = post;
+            const { id: _id, ...data } = blogPost;
             return {
-                id: documentId,
-                slug: slug,
-                content: Content,
-                blogContent: Blog_Content,
-                publishDate: publishDate,
-                preview: Preview,
-                title: Title,
+                id: data.documentId,
+                ...data,
             };
         });
     },
@@ -75,40 +63,34 @@ const blog_posts = defineCollection({
 
 const projects = defineCollection({
     loader: async () => {
-        const data = await getData(
-            "projects?populate=Technology&populate=screenshots&sort=category",
-        ).then((response) => response.json());
-        // console.log(data)
-        if (data.data == null) return {};
+        const fields = {
+            populate: {
+                Technology: {
+                    populate: "*",
+                },
+                screenshots: {
+                    populate: "*",
+                },
+            },
+        };
+        const data = await getData("projects", fields)
+            .then((response) => response.json())
+            .then((data) => data.data);
 
-        return data.data.map(({ ...project }: any) => {
-            // NOTE: this will probably return weird data for now
-            const {
-                slug,
-                preview,
-                category,
-                description,
-                external_url,
-                Title,
-                updatedAt,
-                Technology,
-                screenshots = [],
-            } = project;
+        if (data == null) return {};
 
-            // let screenshots = project.screenshots != null ? project.screenshots : [];
+        return data.map((project: any) => {
+            // console.log(project);
 
-            return {
+            const { id: _id, ...data } = project;
+
+            if (data.screenshots == null) return;
+
+            const projectData = {
                 id: project.documentId,
-                slug: slug,
-                title: Title,
-                url: external_url,
-                preview: preview,
-                description: description,
-                screenshots: screenshots,
-                updatedAt: updatedAt,
-                category: category,
-                techStack: Technology,
+                ...data,
             };
+            return projectData;
         });
     },
 });

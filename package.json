@@ -38,6 +38,7 @@
         "momentjs": "^2.0.0",
         "motion": "^13.3.0",
         "node-gyp": "^12.3.0",
+        "qs": "^6.16.0",
         "react": "^19.2.7",
         "react-dom": "^19.2.7",
         "react-google-recaptcha": "^3.1.0",
@@ -54,6 +55,7 @@
     },
     "devDependencies": {
         "@types/alpinejs__intersect": "^3.13.4",
+        "@types/qs": "^6.15.1",
         "@types/react-google-recaptcha": "^2.1.9"
     },
     "imports": {
