@@ -9,16 +9,17 @@ const { ...data } = Astro.props.project.data
 
 const { title, slug, preview, screenshots } = data
 
-const previewImage = screenshots
-    .sort((a: any, b: any) => (a.width < b.width) ? 1 : -1)
+const previewImage = screenshots.sort((a: any, b: any) => (a.width < b.width) ? 1 : -1)
 
 const API_URL = import.meta.env.SECRET_API_URL;
 const screenshotUrl = API_URL + previewImage[0].formats.medium.url
+
+const projectUrl = `/portfolio/${category}/${slug}`
 ---
 <div class="project-card">
     {screenshotUrl &&
     <div class="project-card-image annotateMe" data-annotate-options={`{ "type": "bracket", "color": "var(--color-secondary)", "brackets": [ "left", "right" ] }`}>
-        <a href={`/portfolio/${category}/${slug}`}>
+        <a href={projectUrl}>
             <Image
                 src={screenshotUrl}
                 inferSize={true}
@@ -27,19 +28,19 @@ const screenshotUrl = API_URL + previewImage[0].formats.medium.url
         </a>
     </div>}
     <div class="mt-8">
-            <a href={`/portfolio/${category}/${slug}`}>
-                <h3 class="text-primary dark:text-cyan">
-                    <span class="annotateUnderline">
-                        {icon != '' && <NerdFontIcon icon={icon} class="text-primary dark:text-cyan mr-2" />}
-                        {title}
-                    </span>
-                </h3>
-            </a>
+        <a href={projectUrl}>
+            <h3 class="text-primary dark:text-cyan">
+                <span class="annotateUnderline">
+                    {icon != '' && <NerdFontIcon icon={icon} class="text-primary dark:text-cyan mr-2" />}
+                    {title}
+                </span>
+            </h3>
+        </a>
         <p class="text-xl pt-4 pb-8.5 leading-[150%]">{truncateWords(preview, 30)}</p>
 
     </div>
 
-    <a href={`/portfolio/${category}/${slug}`} class="learn-more text-secondary">
+    <a href={projectUrl} class="learn-more text-secondary">
         <span class="text-secondary annotateUnderline">
             Learn More
         </span>
