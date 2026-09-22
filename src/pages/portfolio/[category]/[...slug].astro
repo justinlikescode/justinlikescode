@@ -89,11 +89,13 @@ const API_URL = import.meta.env.SECRET_API_URL;
                     <Slider class="thumbnails-swiper" arrows={false} swiperOptions={swiperThumbs}>
                         <Fragment slot="slides">
                             {screenshotsSortedWidest.map((screenshot: any) => 
-                            <Slide class="thumbnails-swiper-slide w-55.25! h-30!">
+                            <Slide class="thumbnails-swiper-slide">
                                 <Image
                                     src={API_URL + screenshot.url}
                                     width="221"
                                     height="120"
+                                    layout="constrained"
+                                    fit="cover"
                                     alt={screenshot.alternativeText ? screenshot.alternativeText : title}
                                     class="thumbnails-swiper-image"
                                     />
