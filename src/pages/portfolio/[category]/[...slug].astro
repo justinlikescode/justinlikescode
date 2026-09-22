@@ -94,6 +94,8 @@ const API_URL = import.meta.env.SECRET_API_URL;
                                     src={API_URL + screenshot.url}
                                     width="221"
                                     height="120"
+                                    layout="constrained"
+                                    fit="cover"
                                     alt={screenshot.alternativeText ? screenshot.alternativeText : title}
                                     class="thumbnails-swiper-image"
                                     />
