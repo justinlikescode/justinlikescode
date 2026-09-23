@@ -1,0 +1,20 @@
+---
+import offlinePortfolio from "/justin-paelmo-offline-portfolio.pdf"
+
+import PillButton from "@components/buttons/PillButton.astro"
+import SectionHeader from "@components/pageSections/SectionHeader.astro"
+---
+
+<section id="resume" class="bg-primary dark:bg-darker-900 py-14">
+    <SectionHeader class="mb-4">
+        <h2 class="text-white dark:text-cyan" slot="title">See My Work</h2>
+    </SectionHeader>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-5 max-w-fit mx-auto">
+        <PillButton href={new URL('/portfolio', Astro.url)} class="inverse mx-auto text-3xl border-white after:bg-white! hover:text-primary dark:hover:text-secondary mb-8 md:mb-0">
+            Online Portfolio
+        </PillButton>
+        <PillButton href={offlinePortfolio} class="inverse mx-auto text-3xl border-white after:bg-white! hover:text-primary dark:hover:text-secondary" target="_blank">
+            Download a PDF
+        </PillButton>
+    </div>
+</section>

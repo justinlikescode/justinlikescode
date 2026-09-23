@@ -1,8 +1,11 @@
-import { marked } from "marked";
-import { truncateWords } from "@shahid19/stringjs";
-
 import { getData } from "@lib/helpers";
 import { defineCollection } from "astro:content";
+
+/*
+ * NOTE: Deprecated
+ 
+import { marked } from "marked";
+import { truncateWords } from "@shahid19/stringjs";
 
 function preview(text: string, truncate: number = 0) {
     if (truncate >= 1 && truncate != null) {
@@ -14,6 +17,7 @@ function preview(text: string, truncate: number = 0) {
 
     return cleaned_text;
 }
+*/
 
 const menu_items = defineCollection({
     loader: async (): Promise<any> => {
@@ -50,9 +54,7 @@ const blog_posts = defineCollection({
 
         if (data == null) return {}; // if no data then return empty
 
-        return data.map((blogPost: any) => {
-            // const { documentId, slug, Date: publishDate, Preview, Content, Title, Blog_Content } = post;
-            const { id: _id, ...data } = blogPost;
+        return data.map(({ id: _id, ...data }: any) => {
             return {
                 id: data.documentId,
                 ...data,
@@ -79,18 +81,13 @@ const projects = defineCollection({
 
         if (data == null) return {};
 
-        return data.map((project: any) => {
-            // console.log(project);
-
-            const { id: _id, ...data } = project;
-
+        return data.map(({ id: _id, ...data }: any) => {
             if (data.screenshots == null) return;
 
-            const projectData = {
-                id: project.documentId,
+            return {
+                id: data.documentId,
                 ...data,
             };
-            return projectData;
         });
     },
 });

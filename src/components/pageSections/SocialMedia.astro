@@ -1,0 +1,13 @@
+---
+import SectionHeader from "@components/pageSections/SectionHeader.astro"
+import SocialMediaList from "@components/pageSections/SocialMediaList.astro"
+---
+
+<section id="social" class="bg-primary dark:bg-darker-900 pt-8"> 
+    <SectionHeader class="mb-4">
+        <h2 class="text-white dark:text-cyan" slot="title">Social Media</h2>
+    </SectionHeader>
+    <div class="justin-container flex flex-col items-center justify-center">
+        <SocialMediaList />
+    </div>
+</section>

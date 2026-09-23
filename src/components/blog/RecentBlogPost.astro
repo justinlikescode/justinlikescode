@@ -4,18 +4,20 @@ import { truncateWords } from '@shahid19/stringjs'
 const { data } = Astro.props
 
 const { slug, Date:publishDate, Title:title, Preview:preview } = data
+
+const blogUrl = new URL(`/blog/${slug}`, Astro.url)
 ---
 
 <article class="w-full recent-blog-post annotateMe" data-annotate-options={`{ "type": "bracket", "color": "var(--color-secondary)", "brackets": [ "right" ] }`}>
     <div class="mb-5">
         <h3 class="title">
-            <a href={`/blog/${slug}`} set:html={truncateWords(title, 20)}></a>
+            <a href={blogUrl} set:html={truncateWords(title, 20)}></a>
         </h3>
         <h5 class="date"><em>{blogDate(publishDate)}</em></h5>
         <p class="preview" set:html={preview}></p>
     </div>
 
-    <a href={`/blog/${slug}`} class="read-more">
+    <a href={blogUrl} class="read-more">
         <span class=" annotateUnderline">
             Read More
         </span>

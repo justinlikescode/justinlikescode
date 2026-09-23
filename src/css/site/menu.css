@@ -103,7 +103,7 @@ header {
             &.active {
                 @apply text-green;
                 &:hover {
-                    @apply text-cyan;
+                    /* @apply text-cyan; */
                 }
             }
         }
