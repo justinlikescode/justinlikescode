@@ -4,6 +4,7 @@
 @import './site/menu.css';
 @import './site/swiper.css';
 @import './site/pages.css';
+@import './site/sections.css';
 
 /* HACK: for some reason this keyframe breaks with SPA/SSG
 *  rough-notation Fix */
@@ -12,4 +13,3 @@
         stroke-dashoffset: 0;
     }
 }
-

@@ -27,7 +27,74 @@ const servicesData = [
 ]
 ---
 
-<section id="services" class="flex flex-col items-center">
+{/**/}
+<script>
+import { animate, engine, splitText, stagger, spring, createTimeline } from 'animejs';
+
+engine.defaults.autoplay = false
+
+const sectionHeader = animate("#services > .section-header > h2", {
+    opacity: [0, 1],
+    translateY: ["-100%", 0],
+    duration: 250
+})
+
+const { words: sectionTagline } = splitText('#services > .section-header > .description p', { words: true })
+
+const sectionTaglineAnimation = animate(sectionTagline, {
+    opacity: [0, 1],
+    y: ['-100%', '0%'],
+    delay: stagger(25),
+    duration: 50,
+})
+
+const sectionTaglineHighlight = animate('#services > .section-header > .section-highlight', {
+    width: ['0%', '200px'],
+    ease: spring({
+        bounce: 0.4,
+        duration: 250
+    }),
+})
+
+const textTimeline = createTimeline()
+    .sync(sectionHeader)
+    .sync(sectionTaglineAnimation)
+    .sync(sectionTaglineHighlight)
+
+const sectionServicesCards = animate('#services .service-card-container', {
+    opacity: [0, 1], // opacity is not working
+    translateY: ['50%', '0%'],
+    duration: 350,
+    delay: stagger(50),
+})
+
+const mainTimeline = createTimeline({
+    defaults: { duration: 450 }
+})
+    .sync(textTimeline)
+    .sync(sectionServicesCards)
+
+const observerOptions = {
+    root: document,
+    threshold: 0.5,
+}
+
+const observer = new IntersectionObserver((entries, _observer) => {
+    if (entries[0].isIntersecting) {
+        console.log("In View")
+        mainTimeline.play()
+    }
+}, observerOptions)
+
+const services = document.querySelector("#services")
+
+if(services != null) {
+    observer.observe(services)
+}
+</script>
+ 
+
+<section id="services" class="services-section py-20 flex flex-col items-center">
     <SectionHeader>
         <h2 slot="title">Services</h2>
         <p slot="description">I'm a big enthusiast (aka a big nerd) about web development, productive tooling, Continuous Integration/Development, and server administration.</p>

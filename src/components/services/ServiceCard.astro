@@ -4,66 +4,23 @@ import NerdFontIcon from '@components/buttons/NerdFontIcon.astro'
 const { data } = Astro.props
 const { icon, title, description, href, buttonText } = data
 ---
+<div class="service-card-container">
+    <div class="service-card bg-offWhite">
+        <div class="service-card-text pb-11">
+            <h3 class="text-primary dark:text-cyan text-[32px]">
+                <NerdFontIcon icon={icon} class="text-primary dark:text-cyan mr-2" />
+                {title}
+            </h3>
+            <p class="text-xl pt-8.5 leading-[150%]">{description}</p>
+        </div>
 
-<div class="service-card">
-    <div class="service-card-text pb-11">
-        <h3 class="text-primary dark:text-cyan text-[32px]">
-            <NerdFontIcon icon={icon} class="text-primary dark:text-cyan mr-2" />
-            {title}
-        </h3>
-        <p class="text-xl pt-8.5 leading-[150%]">{description}</p>
+        <a href={href} class="learn-more">
+            <span class="text-secondary dark:text-cyan annotateUnderline">
+                {buttonText}
+            </span>
+        </a>
+
     </div>
 
-    <a href={href} class="learn-more">
-        <span class="text-secondary dark:text-cyan annotateUnderline">
-            {buttonText}
-        </span>
-    </a>
+    <div class="service-underlay"></div>
 </div>
-
-<style>
-    @reference "#main.css";
-
-    .service-card {
-        @apply relative mx-auto mb-8 lg:mb-0 w-10/12 md:w-full flex flex-col items-start justify-center;
-        @apply border border-primary dark:border-secondary;
-        @apply bg-offWhite dark:bg-darker-900;
-        @apply p-6.5;
-        @apply rounded-lg;
-
-        .service-card-text {
-            @apply z-30;
-        }
-
-        &:after {
-            content: ' ';
-            @apply absolute w-full h-full top-3 left-3 -z-10 pointer-events-none;
-            @apply transition-colors;
-            @apply bg-primary;
-            @apply rounded-lg;
-        }
-
-        @variant dark {
-            &:after {
-                @apply bg-secondary;
-            }
-        }
-    }
-
-    .learn-more {
-        @apply text-secondary dark:text-cyan justify-self-end relative font-bold mt-auto;
-
-        /* &:after { */
-        /*     content: ' '; */
-        /*     @apply absolute w-full h-0.5 transition-all; */
-        /*     @apply left-0 bottom-0; */
-        /*     @apply bg-secondary; */
-        /* } */
-        /**/
-        /* @variant dark {  */
-        /*     &:after { */
-        /*         @apply bg-cyan; */
-        /*     } */
-        /* } */
-    }
-</style>

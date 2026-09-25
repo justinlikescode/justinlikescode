@@ -1,5 +1,5 @@
 ---
-const { class:classes } = Astro.props
+const { class:classes = "" } = Astro.props
 ---
 
 <header class={`section-header container mx-auto ${classes}`}>
@@ -8,6 +8,7 @@ const { class:classes } = Astro.props
     <div class="description">
         <slot name="description"/>
     </div>}
+    <div class="section-highlight"></div>
 </header>
 
 <style>
@@ -34,9 +35,9 @@ const { class:classes } = Astro.props
         }
     }
 
-    &:after {
+    .section-highlight {
         content: ' ';
-        @apply block w-45 h-1  mx-auto;
+        @apply block h-1 w-45 mx-auto;
         @apply bg-secondary dark:bg-cyan-400;
 
         @apply my-0 py-0;
