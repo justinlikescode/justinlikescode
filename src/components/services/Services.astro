@@ -69,14 +69,14 @@ const sectionServicesCards = animate('#services .service-card-container', {
 })
 
 const mainTimeline = createTimeline({
-    defaults: { duration: 450 }
+    defaults: { duration: 350 }
 })
     .sync(textTimeline)
     .sync(sectionServicesCards)
 
 const observerOptions = {
     root: document,
-    threshold: 0.75,
+    threshold: 0.60,
 }
 
 const observer = new IntersectionObserver((entries, _observer) => {

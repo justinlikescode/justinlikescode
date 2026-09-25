@@ -6,6 +6,7 @@ import favicon from '@images/favicon.ico';
 import "@css/main.css";
 
 import Header from "@layouts/header.astro";
+import Main from "@layouts/main.astro";
 import Footer from "@layouts/footer.astro";
 
 const { siteTitle = 'justin, a dev' } = Astro.props
@@ -77,9 +78,9 @@ const { siteTitle = 'justin, a dev' } = Astro.props
     <body>
         <span id="top"></span>
         <Header transition:persist />
-        <main transition:animate="slide" class="px-4 sm:px-0">
+        <Main>
             <slot />
-        </main>
-        <Footer />
+        </Main>
+        <Footer transition:persist />
     </body>
 </html>
