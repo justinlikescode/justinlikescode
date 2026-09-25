@@ -1,4 +1,7 @@
 #services {
+    .service-card-container {
+        @apply relative;
+    }
 
     .service-card {
         @apply relative mx-auto mb-8 lg:mb-0 w-10/12 md:w-full h-full flex flex-col items-start justify-center;
