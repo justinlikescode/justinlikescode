@@ -45,7 +45,7 @@ const mainTimeline = createTimeline({
 
 const observerOptions = {
     root: document,
-    threshold: 0.60,
+    threshold: 0.30,
 }
 
 const observer = new IntersectionObserver((entries, _observer) => {
@@ -67,7 +67,7 @@ if(section != null) {
         <p slot="description">I'm a big enthusiast (aka a big nerd) about web development, productive tooling, Continuous Integration/Development, and server administration.</p>
     </SectionHeader>
 
-    <div class="service-cards container mx-auto py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-x-10 xl:gap-x-30">
+    <div class="service-cards container mx-auto py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-0 gap-y-10 md:gap-x-10 xl:gap-x-30">
         {servicesData.map((serviceData: any) => <ServiceCard data={serviceData} />)}
     </div>
 </section>

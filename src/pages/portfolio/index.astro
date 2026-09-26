@@ -47,7 +47,7 @@ const sortedByCount = await sortedByCategory.sort((a: any, b: any) => (a.count >
 ---
 
 <BaseLayout>
-    <section class="container mx-auto">
+    <section class="container mx-auto px-4 sm:px-0">
         {sortedByCount.map(({id, projects}: {id:any, projects:any}) => 
         <div class="mb-24 first-of-type:mt-12 last-of-type:mb-8">
             <h2 class="text-4xl mb-8"><NerdFontIcon icon={getCategoryIcon(id)} /> {categoryTitle(id)}</h2>

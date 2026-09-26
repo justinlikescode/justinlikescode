@@ -53,6 +53,14 @@
     section {
         + section {
             @apply py-20;
+
+            @apply pb-0;
+
+            @variant lg {
+                &:last-of-type {
+                    @apply pb-10;
+                }
+            }
         }
     }
 }
