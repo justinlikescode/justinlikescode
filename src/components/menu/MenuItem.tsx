@@ -2,16 +2,13 @@
 
 import { RoughNotation } from "react-rough-notation";
 
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
+
+import ThemeContext from "./ThemeContext.tsx";
 
 export default function MenuItem({ href, icon, label, active }: any): any {
     const [isActive, setIsActive] = useState(active);
-
-    const [theme, setTheme] = useState(localStorage.theme);
-
-    useEffect(() => {
-        setTheme(document.documentElement.dataset.theme);
-    }, [document.documentElement.dataset.theme]);
+    const { theme } = useContext(ThemeContext);
 
     function checkActive(): void {
         if (active) return;

@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useContext } from "react";
+import ThemeContext from "./ThemeContext.tsx";
 
 export default function ToggleVisualTheme({ className }: { className?: string }) {
-    const [theme, setTheme] = useState(localStorage.getItem("theme"));
+    const { theme, setTheme } = useContext(ThemeContext);
 
     function toggleTheme() {
         if (theme === "light") {
