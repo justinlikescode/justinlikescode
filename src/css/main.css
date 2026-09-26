@@ -1,4 +1,4 @@
-@import "https://www.nerdfonts.com/assets/css/webfont.css";
+@import './fonts/nerdfontIcons.css';
 @import './tailwind/tailwind.css';
 
 @import './site/menu.css';

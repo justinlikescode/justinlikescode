@@ -35,6 +35,20 @@ export default defineConfig({
             cssVariable: "--font-roboto-slab",
             weights: ["100 900"],
         },
+        {
+            provider: fontProviders.local(),
+            name: "Symbols Nerd Font",
+            cssVariable: "--font-symbols-nerd",
+            options: {
+                variants: [
+                    {
+                        weights: ["100 900"],
+                        style: "normal",
+                        src: ["./src/assets/fonts/Symbols-2048-em.woff2"],
+                    },
+                ],
+            },
+        },
     ],
     i18n: {
         locales: ["en", "es"],
