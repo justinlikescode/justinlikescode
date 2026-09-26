@@ -24,7 +24,7 @@ export const socialMedia: SocialMedia[] = [
 ]
 ---
 
-<ul class="flex flex-row">
+<ul class="social-media-list flex flex-row">
     {socialMedia.map(({ url, classes, icon, label }: SocialMedia) =>
     <li class="mr-4 last:mr-0 text-4xl transition-transform hover:scale-125">
         <a href={url} target="_blank" class="no-underline">

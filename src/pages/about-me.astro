@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "@layouts/base.astro";
 import SectionHeader from "@components/pageSections/SectionHeader.astro";
+import SeeMyWork from "@components/pageSections/SeeMyWork.astro";
+
 // import SkillsList from '@components/'
 
 import resume from "/justin-paelmo-resume.pdf"
@@ -199,6 +201,8 @@ export const skills_data: Skill[] = [
             <p>I've been incorporating more and more workflows that involve CI/CD practices for code deployment and environment management.</p>
         </div>
     </section>
+
+    <SeeMyWork />
 </BaseLayout>
 
 <style>

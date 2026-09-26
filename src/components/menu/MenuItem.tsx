@@ -10,12 +10,8 @@ export default function MenuItem({ href, icon, label, active }: any): any {
     const [theme, setTheme] = useState(localStorage.theme);
 
     useEffect(() => {
-        setTheme(localStorage.theme);
-    });
-
-    function themeColor(): string {
-        return theme === "light" ? "var(--color-secondary)" : "var(--color-green)";
-    }
+        setTheme(document.documentElement.dataset.theme);
+    }, [document.documentElement.dataset.theme]);
 
     function checkActive(): void {
         if (active) return;
@@ -29,7 +25,7 @@ export default function MenuItem({ href, icon, label, active }: any): any {
                 type="underline"
                 show={isActive}
                 animationDuration={350}
-                color={themeColor()}
+                color={theme === "light" ? "#D90880" : "#50fa7b"}
                 strokeWidth={2}
             >
                 <a

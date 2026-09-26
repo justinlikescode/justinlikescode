@@ -1,12 +1,16 @@
 "use client";
 
+import { useRef } from "react";
+
 import MenuItem from "./MenuItem.tsx";
-import ToggleMode from "@components/buttons/ToggleVisualTheme.tsx";
-import LanguageSelector from "./LanguageSelector.tsx";
+import ToggleMode from "@components/menu/ToggleVisualTheme.tsx";
+// import LanguageSelector from "./LanguageSelector.tsx";
 
 import type { MenuItemType } from "@lib/types";
 
 export default function MainMenu({ items }: { items: MenuItemType[] }): any {
+    const mainMenu = useRef(null);
+
     function isActive(href: string): boolean {
         return window.location.pathname.includes(href);
     }

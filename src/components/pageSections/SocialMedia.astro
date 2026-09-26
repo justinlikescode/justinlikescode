@@ -1,0 +1,48 @@
+---
+import SectionHeader from "@components/pageSections/SectionHeader.astro"
+import SocialMediaList from "@components/pageSections/SocialMediaList.astro"
+---
+{/* */}
+<script>
+import { animate, engine, stagger, createTimeline } from 'animejs';
+
+engine.defaults.autoplay = false
+
+const socialMediaLinks = animate('#social .social-media-list li > a', {
+    opacity: [0, 1], // opacity is not working
+    translateY: ['100%', '0%'],
+    duration: 350,
+    delay: stagger(150),
+})
+
+const mainTimeline = createTimeline({
+    defaults: { duration: 350, }
+})
+    .sync(socialMediaLinks)
+
+const observerOptions = {
+    root: document,
+    threshold: 0.60,
+}
+
+const observer = new IntersectionObserver((entries, _observer) => {
+    if (entries[0].isIntersecting) {
+        mainTimeline.play()
+    }
+}, observerOptions)
+
+const section = document.querySelector("#social")
+
+if(section != null) {
+    observer.observe(section)
+}
+</script>
+ 
+<section id="social" class="bg-primary dark:bg-darker-900 pt-8 pb-16"> 
+    <SectionHeader class="mb-4">
+        <h2 class="text-white dark:text-cyan" slot="title">Social Media</h2>
+    </SectionHeader>
+    <div class="justin-container flex flex-col items-center justify-center">
+        <SocialMediaList />
+    </div>
+</section>

@@ -1,10 +1,8 @@
 "use client";
 
-// import { useEffect } from "react";
-
 import type { MenuItemType } from "@lib/types";
 
-import ToggleMode from "@components/buttons/ToggleVisualTheme";
+import ToggleMode from "@components/menu/ToggleVisualTheme";
 
 export default function MobileMenu({
     items,
@@ -13,13 +11,6 @@ export default function MobileMenu({
     items: MenuItemType[];
     mobileMenu: React.RefObject<HTMLUListElement>;
 }) {
-    /*
-              useEffect(() => {
-                  mobileMenu.current.addEventListener("click", (e: any) => {
-                      console.log(e.currentTarget);
-                  });
-              });
-              */
     return (
         <ul
             className="mobile-menu border-b-2 border-b-primary dark:border-b-secondary"

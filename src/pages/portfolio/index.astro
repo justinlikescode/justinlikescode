@@ -2,18 +2,28 @@
 export const prerender = true
 
 import { getCollection } from 'astro:content';
-import { capitalizeString, getCategoryIcon, categoryTitle } from "@lib/helpers";
+import { capitalizeString, getCategoryIcon, categoryTitle, getData } from "@lib/helpers";
 
 import BaseLayout from "@layouts/base.astro";
 import ProjectCard from "@components/projects/ProjectCard.astro";
 import NerdFontIcon from "@components/buttons/NerdFontIcon.astro";
 
+import SocialMedia from "@components/pageSections/SocialMedia.astro";
+
 const projects = await getCollection('projects');
 
+/*
+const sortedProjects = await getData('projects', {
+    sort: "category",
+    fields: ["slug", "category"]
+}).then(r => r.json())
+
+console.log(sortedProjects)
+ */
 
 let sortedByCategory: any = []
 
-projects.map((project: any) => {
+projects.forEach((project: any) => {
     if (sortedByCategory.find((categoryItem: any) => {
         if (categoryItem.id === project.data.category) {
             categoryItem.count++
@@ -34,22 +44,6 @@ projects.map((project: any) => {
 })
 
 const sortedByCount = await sortedByCategory.sort((a: any, b: any) => (a.count > b.count) ? -1 : 1)
-
-/*
-const categoryTitle = (categoryId: string): string => {
-    if(categoryId.includes('2')) {
-        return categoryId.split('2').map(word => capitalizeString(word)).join('2')
-    }
-
-    if(!categoryId.includes('/')){ 
-        return capitalizeString(categoryId)
-    } 
-
-    return categoryId.split('/').map(word => capitalizeString(word)).join('/')
-}
-*/
-
-// console.log(sortedByCount)
 ---
 
 <BaseLayout>
@@ -64,4 +58,6 @@ const categoryTitle = (categoryId: string): string => {
         </div>
         )}
     </section>
+
+    <SocialMedia />
 </BaseLayout>

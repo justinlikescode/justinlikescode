@@ -15,7 +15,7 @@ export default function Header({ items }: { items: MenuItemType[] }): any {
     mediaQuery.addEventListener("change", (e: MediaQueryListEvent): void => setIsMobile(e.matches));
 
     return (
-        <header className="relative">
+        <header className="relative min-h-fit">
             <div className="z-30 transition-colors bg-white dark:bg-black border-b-2 border-b-primary dark:border-b-secondary">
                 <div className="px-4 xl:px-unset xl:container mx-auto w-full flex flex-row justify-between items-center py-3">
                     <a href="/" className="text-3xl flex items-center no-underline max-w-8/10">

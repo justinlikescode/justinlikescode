@@ -1,6 +1,74 @@
 ---
-const { class:classes } = Astro.props
+const { class:classes = "" } = Astro.props
 ---
+
+<script>
+import { animate, engine, splitText, stagger, spring, createTimeline } from 'animejs';
+
+engine.defaults.autoplay = false
+
+document.querySelectorAll('.section-header').forEach(section => {
+    const fullSection = section.parentElement
+    if(fullSection == null) return
+
+    const heading = fullSection?.querySelector('.section-header > h2')
+    const tagline = fullSection?.querySelector('.section-header > .description p')
+    const highlight = fullSection?.querySelector('.section-header > .section-highlight')
+
+    let animations = []
+
+    if(heading != null) {
+        const headingAnimation = animate(heading, {
+            opacity: [0, 1],
+            translateY: ["-100%", 0],
+            duration: 250
+        })
+
+        animations.push(headingAnimation)
+    }
+
+    if(tagline != null) {
+        const { words: taglineSplit } = splitText(tagline, { chars: true })
+
+        const taglineAnimation = animate(taglineSplit, {
+            opacity: [0, 1],
+            delay: stagger(50),
+            duration: 100,
+        })
+
+        animations.push(taglineAnimation)
+    }
+
+    if(highlight != null) {
+        const headerHighlightAnimation = animate(highlight, {
+            width: ['0%', '200px'],
+            ease: spring({
+                bounce: 0.4,
+                duration: 250
+            }),
+        })
+
+        animations.push(headerHighlightAnimation)
+    }
+
+    const sectionHeaderTimeline = createTimeline()
+
+    animations.forEach(animation => sectionHeaderTimeline.sync(animation))
+
+    const observerOptions = {
+        root: document,
+        threshold: 0.60,
+    }
+
+    const observer = new IntersectionObserver((entries, _observer) => {
+        if (entries[0].isIntersecting) {
+            sectionHeaderTimeline.play()
+        }
+    }, observerOptions)
+
+    observer.observe(fullSection)
+})
+</script>
 
 <header class={`section-header container mx-auto ${classes}`}>
     <slot name="title"/>
@@ -8,6 +76,7 @@ const { class:classes } = Astro.props
     <div class="description">
         <slot name="description"/>
     </div>}
+    <div class="section-highlight"></div>
 </header>
 
 <style>
@@ -34,9 +103,9 @@ const { class:classes } = Astro.props
         }
     }
 
-    &:after {
+    .section-highlight {
         content: ' ';
-        @apply block w-45 h-1  mx-auto;
+        @apply block h-1 w-45 mx-auto;
         @apply bg-secondary dark:bg-cyan-400;
 
         @apply my-0 py-0;

@@ -26,8 +26,42 @@ const servicesData = [
     }
 ]
 ---
+<script>
+import { animate, engine, stagger, createTimeline } from 'animejs';
 
-<section id="services" class="flex flex-col items-center">
+engine.defaults.autoplay = false
+
+const sectionServicesCards = animate('#services .service-card-container', {
+    opacity: [0, 1],
+    translateY: ['50%', '0%'],
+    duration: 350,
+    delay: stagger(150),
+})
+
+const mainTimeline = createTimeline({
+    defaults: { duration: 350, }
+})
+.sync(sectionServicesCards, '+=500')
+
+const observerOptions = {
+    root: document,
+    threshold: 0.60,
+}
+
+const observer = new IntersectionObserver((entries, _observer) => {
+    if (entries[0].isIntersecting) {
+        mainTimeline.play()
+    }
+}, observerOptions)
+
+const section = document.querySelector("#services")
+
+if(section != null) {
+    observer.observe(section)
+}
+</script>
+
+<section id="services" class="services-section py-20 flex flex-col items-center">
     <SectionHeader>
         <h2 slot="title">Services</h2>
         <p slot="description">I'm a big enthusiast (aka a big nerd) about web development, productive tooling, Continuous Integration/Development, and server administration.</p>

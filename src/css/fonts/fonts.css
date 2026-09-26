@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Symbols Nerd Font';
-    src: url('../.../assets/fonts/SymbolsNerdFont-Regular.woff') format('woff');
+    src: url('../../assets/fonts/Symbols-2048-em.woff2') format('woff');
     font-weight: normal;
     font-style: normal;
     font-display: swap;

@@ -17,6 +17,7 @@ export default function ToggleVisualTheme({ className }: { className?: string })
         if (theme == undefined || theme == null) return;
         localStorage.setItem("theme", theme);
         document.documentElement.dataset.theme = theme;
+        // mainMenu.current.forceUpdate();
     }, [theme]);
 
     return (
