@@ -3,7 +3,7 @@
 import { useEffect, useContext } from "react";
 import ThemeContext from "./ThemeContext.tsx";
 
-export default function ToggleVisualTheme({ className }: { className?: string }) {
+export default function ToggleVisualTheme({ className = "" }: { className?: string }) {
     const { theme, setTheme } = useContext(ThemeContext);
 
     function toggleTheme() {
@@ -23,12 +23,13 @@ export default function ToggleVisualTheme({ className }: { className?: string })
 
     return (
         <div className={`flex items-center justify-center ${className}`}>
-            <label>
+            <label htmlFor="toggleTheme">
                 <span className="sr-only">Light/Dark Mode</span>
             </label>
 
             <button
-                className="relative inline-flex w-14 max-w-14 rounded-full p-1 bg-primary dark:bg-darker-700 transition-all cursor-pointer"
+                name="toggleTheme"
+                className="pointer-events-auto relative inline-flex w-14 max-w-14 rounded-full p-1 bg-primary dark:bg-darker-700 transition-all cursor-pointer"
                 onClick={() => toggleTheme()}
             >
                 <span
