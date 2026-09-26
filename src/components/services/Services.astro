@@ -27,15 +27,15 @@ const servicesData = [
 ]
 ---
 <script>
-import { animate, engine, splitText, stagger, spring, createTimeline } from 'animejs';
+import { animate, engine, stagger, createTimeline } from 'animejs';
 
 engine.defaults.autoplay = false
 
 const sectionServicesCards = animate('#services .service-card-container', {
-    opacity: [0, 1], // opacity is not working
+    opacity: [0, 1],
     translateY: ['50%', '0%'],
     duration: 350,
-    delay: stagger(50),
+    delay: stagger(150),
 })
 
 const mainTimeline = createTimeline({
@@ -50,15 +50,14 @@ const observerOptions = {
 
 const observer = new IntersectionObserver((entries, _observer) => {
     if (entries[0].isIntersecting) {
-        console.log("In View")
         mainTimeline.play()
     }
 }, observerOptions)
 
-const services = document.querySelector("#services")
+const section = document.querySelector("#services")
 
-if(services != null) {
-    observer.observe(services)
+if(section != null) {
+    observer.observe(section)
 }
 </script>
 
