@@ -1,39 +1,40 @@
 "use client";
 
-import { useRef } from "react";
+// import { useState } from "react";
 
 import MenuItem from "./MenuItem.tsx";
+
+import ThemeProvider from "@components/menu/ThemeProvider.tsx";
 import ToggleMode from "@components/menu/ToggleVisualTheme.tsx";
-// import LanguageSelector from "./LanguageSelector.tsx";
 
 import type { MenuItemType } from "@lib/types";
 
 export default function MainMenu({ items }: { items: MenuItemType[] }): any {
-    const mainMenu = useRef(null);
-
     function isActive(href: string): boolean {
         return window.location.pathname.includes(href);
     }
 
     return (
-        <ul className="main-menu">
-            {items.map(({ href, label, icon, scrollTo = "" }: MenuItemType, index: number) => (
-                <MenuItem
-                    key={index}
-                    active={isActive(href)}
-                    label={label}
-                    href={href}
-                    icon={icon}
-                    scrollTo={scrollTo}
-                />
-            ))}
+        <ThemeProvider>
+            <ul className="main-menu">
+                {items.map(({ href, label, icon, scrollTo = "" }: MenuItemType, index: number) => (
+                    <MenuItem
+                        key={index}
+                        active={isActive(href)}
+                        label={label}
+                        href={href}
+                        icon={icon}
+                        scrollTo={scrollTo}
+                    />
+                ))}
 
-            <li className="main-menu-modeToggle">
-                <ToggleMode />
-            </li>
-            {/* <li className="main-menu-language">
+                <li className="main-menu-modeToggle">
+                    <ToggleMode />
+                </li>
+                {/* <li className="main-menu-language">
                 <LanguageSelector />
             </li> */}
-        </ul>
+            </ul>
+        </ThemeProvider>
     );
 }

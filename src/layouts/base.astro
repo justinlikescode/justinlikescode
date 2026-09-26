@@ -30,7 +30,7 @@ const { siteTitle = 'justin, a dev' } = Astro.props
 </script>
 
 <script is:inline type="module" data-astro-rerun>
-    import { annotate } from "https://unpkg.com/rough-notation?module"
+    import { annotate } from "../../node_modules/rough-notation/lib/rough-notation.esm.js"
 
     function processAnchors(anchorArray, anchorOptions) {
         anchorArray.forEach((anchor) => {
