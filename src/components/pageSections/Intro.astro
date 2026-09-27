@@ -23,12 +23,6 @@ const imageUnderlay = animate('.portrait-image-underlay', {
     height: [0, "100%"]
 })
 
-const imageTimeline = createTimeline({
-    defaults: { duration: 350 }
-})
-    .sync(imagePortrait)
-    .sync(imageUnderlay)
-
 
 const { words: introHeader } = splitText('h2.intro-text', { words: true })
 const { words: introText } = splitText('.intro-textContent', { words: true })
@@ -53,6 +47,12 @@ const introButtonAnimation = animate('.intro .pill-button', {
     duration: 250
 })
 
+const imageTimeline = createTimeline({
+    defaults: { duration: 350 }
+})
+    .sync(imagePortrait)
+    .sync(imageUnderlay)
+
 const textTimeline = createTimeline({
     defaults: { duration: 150 }
 })
@@ -68,7 +68,7 @@ mainTimeline.play()
 </script>
 
 <section class="home-hero">
-    <div class="home-hero-container py-8 md:py-0 z-20! overflow-hidden">
+    <div class="home-hero-container py-8 md:py-0 z-20! overflow-hidden px-4 xl:px-0">
         <div class="desktop-portrait">
             <div class="portrait-image">
                 <Image
