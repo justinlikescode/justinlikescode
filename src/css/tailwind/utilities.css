@@ -52,6 +52,10 @@
 
 @utility read-more {
     @apply text-secondary font-bold;
+
+    @variant dark {
+        @apply text-green;
+    }
 }
 
 @utility fancy-link {
