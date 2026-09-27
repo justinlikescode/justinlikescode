@@ -22,7 +22,7 @@ export default function MenuItem({ href, icon, label, active }: any): any {
                 type="underline"
                 show={isActive}
                 animationDuration={350}
-                color={theme === "light" ? "#D90880" : "#50fa7b"}
+                color={theme === "light" ? "var(--color-secondary)" : "var(--color-green)"}
                 strokeWidth={2}
             >
                 <a

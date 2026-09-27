@@ -29,32 +29,32 @@ const { siteTitle = 'justin, a dev' } = Astro.props
     document.addEventListener("astro:before-swap", applyTheme);
 </script>
 
-<script is:inline type="module" data-astro-rerun>
-    import { annotate } from "https://unpkg.com/rough-notation?module"
+<script>
+    import { annotate } from "rough-notation"
 
-    function processAnchors(anchorArray, anchorOptions) {
-        anchorArray.forEach((anchor) => {
+    function processAnchors(anchorArray: NodeListOf<HTMLElement>, anchorOptions: object): void {
+        anchorArray.forEach((anchor:HTMLElement) => {
             const passedOptions = anchor.dataset.annotateOptions
                 ? JSON.parse(anchor.dataset.annotateOptions) 
                 : {}
             const annotateOptions = Object.assign(anchorOptions, passedOptions)
             const annotation = annotate(anchor, annotateOptions)
 
-            anchor.addEventListener('mouseover', _event => {
+            anchor.addEventListener('mouseover', (_event:MouseEvent) => {
                 annotation.show()
             })
 
-            anchor.addEventListener('mouseout', _event => {
+            anchor.addEventListener('mouseout', (_event:MouseEvent) => {
                 annotation.hide()
             })
         })
     }
     document.addEventListener('astro:page-load', function () {
-        const annotateGeneric = document.querySelectorAll('.annotateMe')
-        const annotateCircleAnchors = document.querySelectorAll('.annotateCircle')
-        const annotateUnderlineAnchors = document.querySelectorAll('.annotateUnderline')
+        const annotateGeneric = document.querySelectorAll('.annotateMe') as NodeListOf<HTMLElement>
+        const annotateCircleAnchors = document.querySelectorAll('.annotateCircle') as NodeListOf<HTMLElement>
+        const annotateUnderlineAnchors = document.querySelectorAll('.annotateUnderline') as NodeListOf<HTMLElement>
 
-        processAnchors(annotateUnderlineAnchors, { type: 'underline' })
+        processAnchors(annotateUnderlineAnchors, { type: 'underline' }) 
         processAnchors(annotateCircleAnchors, { type: 'circle' })
         processAnchors(annotateGeneric, {})
     })

@@ -28,11 +28,11 @@ document.querySelectorAll('.section-header').forEach(section => {
     }
 
     if(tagline != null) {
-        const { words: taglineSplit } = splitText(tagline, { chars: true })
+        const { chars: taglineSplit } = splitText(tagline, { chars: true })
 
         const taglineAnimation = animate(taglineSplit, {
             opacity: [0, 1],
-            delay: stagger(50),
+            delay: stagger(5),
             duration: 100,
         })
 

@@ -8,7 +8,13 @@ const { slug, Date:publishDate, Title:title, Preview:preview } = data
 const blogUrl = new URL(`/blog/${slug}`, Astro.url)
 ---
 
-<article class="w-full recent-blog-post annotateMe" data-annotate-options={`{ "type": "bracket", "color": "var(--color-secondary)", "brackets": [ "right" ] }`}>
+<article 
+    class="w-full recent-blog-post annotateMe"
+    data-annotate-options={`{ 
+        "type": "bracket",
+        "color": "var(--color-secondary)", 
+        "brackets": [ "right" ] 
+    }`}>
     <div class="mb-5">
         <h3 class="title">
             <a href={blogUrl} set:html={truncateWords(title, 20)}></a>
