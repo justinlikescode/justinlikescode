@@ -7,7 +7,7 @@ import NerdFontIcon from '@components/buttons/NerdFontIcon.astro'
 const { icon = "", category = "" } = Astro.props
 const { ...data } = Astro.props.project.data
 
-const { title, slug, preview, screenshots } = data
+const { Title:title, slug, preview, screenshots } = data
 
 const previewImage = screenshots.sort((a: any, b: any) => (a.width < b.width) ? 1 : -1)
 
