@@ -68,7 +68,7 @@
     &:after {
         --square-size: 16px;
         @apply absolute w-full h-full top-0 left-0 transition-all ease-linear;
-        /* @apply -z-20; */
+        @apply -z-10;
         @apply pointer-events-none;
 
         content: ' ';
