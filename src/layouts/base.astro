@@ -11,21 +11,23 @@ import Footer from "@layouts/footer.astro";
 
 const { siteTitle = 'justin, a dev' } = Astro.props
 ---
-<script is:inline>
-    function loadTheme() {
-        localStorage.getItem("theme") === "light"
-        ? document.documentElement.classList.remove("dark")
-        : document.documentElement.classList.add("dark")
-    }
+<script>
+    /*
+     * NOTE: this used to be a thing but utilizing a react Context 
+     * gives better reactivity for theme mode.
+        function loadTheme() {
+            localStorage.getItem("theme") === "light" ? document.documentElement.classList.remove("dark") : document.documentElement.classList.add("dark")
+        }
+        document.addEventListener("astro:page-load", loadTheme);
+    */
 
-    function applyTheme(event) {
+    function applyTheme(event: any) {
         event.newDocument.documentElement.dataset.theme = localStorage.getItem("theme")
     }
 
     // FIXED: this does not flash bang the user! the old "applyTheme"
     // code wasn't applying localStorage.theme to the *new* document 
     // it was adding it to the old one and *then* updating the new one
-    document.addEventListener("astro:page-load", loadTheme);
     document.addEventListener("astro:before-swap", applyTheme);
 </script>
 
@@ -60,7 +62,7 @@ const { siteTitle = 'justin, a dev' } = Astro.props
     })
 </script>
 
-<html lang="en" data-theme="light">
+<html lang="en" data-theme>
     <head>
         <meta charset="utf-8" />
 
