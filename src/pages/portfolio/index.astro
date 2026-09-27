@@ -2,7 +2,7 @@
 export const prerender = true
 
 import { getCollection } from 'astro:content';
-import { capitalizeString, getCategoryIcon, categoryTitle, getData } from "@lib/helpers";
+import { getCategoryIcon, categoryTitle } from "@lib/helpers";
 
 import BaseLayout from "@layouts/base.astro";
 import ProjectCard from "@components/projects/ProjectCard.astro";
@@ -12,17 +12,13 @@ import SocialMedia from "@components/pageSections/SocialMedia.astro";
 
 const projects = await getCollection('projects');
 
-/*
-const sortedProjects = await getData('projects', {
-    sort: "category",
-    fields: ["slug", "category"]
-}).then(r => r.json())
-
-console.log(sortedProjects)
- */
-
 let sortedByCategory: any = []
 
+/* 
+* HACK: this is a little bit messy tbh
+* it uses a side effect to build the array 
+* instead of following functional principles
+* */
 projects.forEach((project: any) => {
     if (sortedByCategory.find((categoryItem: any) => {
         if (categoryItem.id === project.data.category) {
