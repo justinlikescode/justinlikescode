@@ -1,40 +1,43 @@
-"use client"
+"use client";
 
 import { useState, useRef } from "react";
-import { motion, AnimatePresence, LayoutGroup } from "motion/react"
+import { motion, AnimatePresence, LayoutGroup } from "motion/react";
 
-import InputField from "./InputField.tsx"
-import TextareaField from "./TextareaField.jsx"
+import InputField from "./InputField.tsx";
+import TextareaField from "./TextareaField.jsx";
 
-export default function FormGridForm() {
-    const FORM_SUBMIT_URL: string = "https://frmsp.io/f/DvD0eexHR9D0"
-    const RECAPTCHA_SITE_KEY: string = "4a42e16a-60f4-40e4-b02e-529a268cfcbc"
+export default function FormGridForm({
+    formUrl,
+    recaptchaSiteKey,
+}: {
+    formUrl: string;
+    recaptchaSiteKey: string;
+}) {
+    const [success, setSuccess] = useState(false);
+    const [fail, setFail] = useState(false);
 
-    const [success, setSuccess] = useState(false)
-    const [fail, setFail] = useState(false)
-
-    const contactForm = useRef<HTMLFormElement>(null)
+    const contactForm = useRef<HTMLFormElement>(null);
 
     async function submit(formData: FormData): Promise<void> {
         try {
-            const response = await fetch(FORM_SUBMIT_URL, {
-                method: 'POST',
-                body: formData
+            const response = await fetch(formUrl, {
+                method: "POST",
+                body: formData,
             });
 
             if (response.ok) {
-                setSuccess(true)
+                setSuccess(true);
             }
         } catch (error) {
-            console.log('Error submitting form')
-            console.log(error)
-            setFail(true)
+            console.log("Error submitting form");
+            console.log(error);
+            setFail(true);
         }
     }
 
     function resetForm() {
-        contactForm.current?.reset()
-        setFail(false)
+        contactForm.current?.reset();
+        setFail(false);
     }
 
     return (
@@ -51,7 +54,6 @@ export default function FormGridForm() {
                             ref={contactForm}
                             action={submit}
                         >
-
                             <fieldset>
                                 <InputField name="name" placeholder="Your Name">
                                     Name
@@ -61,19 +63,16 @@ export default function FormGridForm() {
                                     Email
                                 </InputField>
 
-                                <TextareaField name="message">
-                                    Your Message
-                                </TextareaField>
+                                <TextareaField name="message">Your Message</TextareaField>
                             </fieldset>
 
                             <input type="text" name="_gotcha" className="hidden" />
-                            <div className="h-captcha" data-sitekey={RECAPTCHA_SITE_KEY}></div>
+                            <div className="h-captcha" data-sitekey={recaptchaSiteKey}></div>
 
                             <button type="submit" className="pill-button text-white mt-4">
                                 <span className="pill-button-text">
                                     <i className="nf nf-md-send"></i>&nbsp;Contact Me!
                                 </span>
-
                             </button>
                         </motion.form>
                     )}
@@ -100,13 +99,13 @@ export default function FormGridForm() {
                             <div className="bg-red-600 px-4 py-2 text-center w-fit mx-auto rounded-md">
                                 There was an error submitting your form. Please try again later.
                             </div>
-                            <button className="pill-button red mx-auto mt-4" onClick={resetForm}>Try Again</button>
+                            <button className="pill-button red mx-auto mt-4" onClick={resetForm}>
+                                Try Again
+                            </button>
                         </motion.div>
                     )}
                 </AnimatePresence>
             </LayoutGroup>
         </>
-    )
+    );
 }
-
-

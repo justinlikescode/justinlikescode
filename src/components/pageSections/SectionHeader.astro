@@ -1,5 +1,5 @@
 ---
-const { class:classes = "" } = Astro.props
+const { class:classes = "", showHighlight = true } = Astro.props
 ---
 
 <script>
@@ -76,7 +76,7 @@ document.querySelectorAll('.section-header').forEach(section => {
     <div class="description">
         <slot name="description"/>
     </div>}
-    <div class="section-highlight"></div>
+    {showHighlight && <div class="section-highlight"></div>}
 </header>
 
 <style>

@@ -210,7 +210,7 @@
 }
 
 @utility form-input {
-    @apply bg-transparent rounded-md border border-primary dark:border-secondary relative;
+    @apply bg-[#FFF] rounded-md border border-primary dark:border-secondary relative;
     @apply mb-6;
 
     input,

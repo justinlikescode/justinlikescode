@@ -1,4 +1,7 @@
 ---
+import { getImage } from "astro:assets";
+import { getData } from "@lib/helpers";
+
 import { ClientRouter } from 'astro:transitions';
 import { Font } from "astro:assets";
 import favicon from '@images/favicon.ico';
@@ -9,7 +12,21 @@ import Header from "@layouts/header.astro";
 import Main from "@layouts/main.astro";
 import Footer from "@layouts/footer.astro";
 
-const { siteTitle = 'justin, a dev' } = Astro.props
+
+const strapiMetaImageData =  await getData('home-page', {
+    populate: {
+        introImage: {
+            populate: "*",
+        }
+    }
+}).then(r => r.json()).then(data => data.data.introImage)
+
+const strapiMetaImageUrl = new URL(strapiMetaImageData.formats.large.url, import.meta.env.SECRET_API_URL)
+const processedMetaImage = await getImage({ src: strapiMetaImageUrl.href, format: "jpg", inferSize: true })
+const defaultMetaImage = new URL(processedMetaImage.src, Astro.url)
+
+const { siteTitle = 'justin, a dev', metaPageDescription = "", metaPageType = "website", metaPageImageUrl = defaultMetaImage.href } = Astro.props
+
 ---
 <script>
     /*
@@ -34,7 +51,7 @@ const { siteTitle = 'justin, a dev' } = Astro.props
 <script>
     import { annotate } from "rough-notation"
 
-    function processAnchors(anchorArray: NodeListOf<HTMLElement>, anchorOptions: object): void {
+    function processAnchors(anchorArray: NodeListOf<HTMLElement>, anchorOptions: object = {}): void {
         anchorArray.forEach((anchor:HTMLElement) => {
             const passedOptions = anchor.dataset.annotateOptions
                 ? JSON.parse(anchor.dataset.annotateOptions) 
@@ -51,6 +68,7 @@ const { siteTitle = 'justin, a dev' } = Astro.props
             })
         })
     }
+
     document.addEventListener('astro:page-load', function () {
         const annotateGeneric = document.querySelectorAll('.annotateMe') as NodeListOf<HTMLElement>
         const annotateCircleAnchors = document.querySelectorAll('.annotateCircle') as NodeListOf<HTMLElement>
@@ -58,7 +76,7 @@ const { siteTitle = 'justin, a dev' } = Astro.props
 
         processAnchors(annotateUnderlineAnchors, { type: 'underline' }) 
         processAnchors(annotateCircleAnchors, { type: 'circle' })
-        processAnchors(annotateGeneric, {})
+        processAnchors(annotateGeneric)
     })
 </script>
 
@@ -70,6 +88,12 @@ const { siteTitle = 'justin, a dev' } = Astro.props
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="generator" content={Astro.generator} />
+        {metaPageDescription != "" && <meta name="description" content={metaPageDescription} />}
+
+        <meta property="og:title" content={siteTitle} />
+        <meta property="og:type" content={metaPageType} />
+        <meta property="og:url" content={Astro.url} />
+        {metaPageImageUrl != "" && <meta property="og:image" content={metaPageImageUrl} />}
 
         <title>{siteTitle}</title>
 

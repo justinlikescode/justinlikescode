@@ -21,10 +21,6 @@ export function blogDate(date: Date): string {
     return new Date(date).toLocaleDateString("en-US");
 }
 
-export function capitalizeString(stringInput: string) {
-    return stringInput.charAt(0).toUpperCase() + stringInput.slice(1);
-}
-
 export function getCategoryIcon(categoryId: string): string {
     return ((): string => {
         switch (categoryId) {
@@ -87,20 +83,24 @@ export function getTechStackIcon(technology: string): string {
     })();
 }
 
+export function capitalizeString(stringInput: string): string {
+    return stringInput.charAt(0).toUpperCase() + stringInput.slice(1);
+}
+
 export function categoryTitle(categoryId: string): string {
     if (categoryId.includes("2")) {
         return categoryId
             .split("2")
-            .map((word) => capitalizeString(word))
+            .map((word: string): string => capitalizeString(word))
             .join("2");
     }
 
-    if (!categoryId.includes("/")) {
-        return capitalizeString(categoryId);
+    if (categoryId.includes("/")) {
+        return categoryId
+            .split("/")
+            .map((word: string): string => capitalizeString(word))
+            .join("/");
     }
 
-    return categoryId
-        .split("/")
-        .map((word) => capitalizeString(word))
-        .join("/");
+    return capitalizeString(categoryId);
 }
