@@ -251,10 +251,14 @@
     @apply no-underline;
     @apply overflow-hidden;
     @apply cursor-pointer;
-    @apply text-white;
 
     .pill-button-text {
-        @apply z-20;
+        @apply relative;
+        @apply z-30;
+
+        span {
+            @apply text-white;
+        }
     }
 
     &:after {
@@ -266,20 +270,28 @@
 
     &:hover {
         @apply rounded-lg;
-        @apply text-secondary;
 
         &:after {
             @apply translate-y-full;
             @apply border-transparent text-secondary bg-secondary;
         }
+
+        span {
+            @apply text-secondary;
+        }
     }
 
     &.inverse {
+        @apply text-secondary;
         &:after {
             @apply translate-y-full w-[200%];
         }
 
         &:hover {
+            .pill-button-text {
+                @apply text-white;
+            }
+
             &:after {
                 @apply translate-y-0;
             }

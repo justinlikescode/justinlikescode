@@ -2,10 +2,7 @@
 import BaseLayout from "@layouts/base.astro"
 import SectionHeader from "@components/pageSections/SectionHeader.astro"
 
-import ContactForm from "@components/forms/Form.tsx"
-
-const FORM_SUBMIT_URL = import.meta.env.SECRET_FORM_SUBMIT_URL;
-const RECAPTCHA_SITE_KEY = import.meta.env.SECRET_RECAPTCHA_SITE_KEY;
+import ContactForm from "@components/forms/Form"
 
 const pageTitle = "Contact Me - justinlikescode"
 const pageDescription = "A contact form to get in touch with justinlikescode."
@@ -15,6 +12,6 @@ const pageDescription = "A contact form to get in touch with justinlikescode."
         <SectionHeader class="mb-9">
             <h2 slot="title">Contact Me</h2>
         </SectionHeader>
-        <ContactForm client:only="react" formUrl={FORM_SUBMIT_URL} recaptchaSiteKey={RECAPTCHA_SITE_KEY} />
+        <ContactForm client:only="react" formUrl={import.meta.env.SECRET_FORM_SUBMIT_URL} recaptchaSiteKey={import.meta.env.SECRET_RECAPTCHA_SITE_KEY} />
     </section>
 </BaseLayout>

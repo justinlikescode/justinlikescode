@@ -1,14 +1,16 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { motion, AnimatePresence, LayoutGroup } from "motion/react";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+
+import { AnimePresence, AnimePresenceChild } from "@shakibdshy/react-animejs";
 
 import InputField from "./InputField.tsx";
-import TextareaField from "./TextareaField.jsx";
+import TextareaField from "./TextareaField.js";
 
 export default function FormGridForm({
     formUrl,
-    recaptchaSiteKey,
+    recaptchaSiteKey: hCaptchaSiteKey,
 }: {
     formUrl: string;
     recaptchaSiteKey: string;
@@ -20,13 +22,21 @@ export default function FormGridForm({
 
     async function submit(formData: FormData): Promise<void> {
         try {
+            // const formData = new FormData(contactForm.current as HTMLFormElement);
+            // console.log(formData.entries());
             const response = await fetch(formUrl, {
                 method: "POST",
                 body: formData,
             });
 
+            console.log(response);
+
             if (response.ok) {
                 setSuccess(true);
+            }
+
+            if (!response.ok) {
+                setFail(true);
             }
         } catch (error) {
             console.log("Error submitting form");
@@ -42,70 +52,71 @@ export default function FormGridForm({
 
     return (
         <>
-            <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-            <LayoutGroup>
-                <AnimatePresence>
-                    {!success && !fail && (
-                        <motion.form
-                            className="relative"
-                            initial={{ x: "-100%" }}
-                            animate={{ x: 0, opacity: 1 }}
-                            exit={{ x: "100%", opacity: 0 }}
-                            ref={contactForm}
-                            action={submit}
-                        >
-                            <fieldset>
-                                <InputField name="name" placeholder="Your Name">
-                                    Name
-                                </InputField>
+            <AnimePresence mode="wait">
+                {!success && !fail && (
+                    <AnimePresenceChild
+                        key="contactForm"
+                        enter={{ opacity: [0, 1] }}
+                        exit={{ opacity: [1, 0] }}
+                        duration={150}
+                    >
+                        <div>
+                            <form ref={contactForm} className="relative" action={submit}>
+                                <fieldset>
+                                    <InputField name="name" placeholder="Your Name">
+                                        Name
+                                    </InputField>
 
-                                <InputField name="email" placeholder="Your Email">
-                                    Email
-                                </InputField>
+                                    <InputField name="email" placeholder="Your Email">
+                                        Email
+                                    </InputField>
 
-                                <TextareaField name="message">Your Message</TextareaField>
-                            </fieldset>
+                                    <TextareaField name="message">Your Message</TextareaField>
+                                </fieldset>
 
-                            <input type="text" name="_gotcha" className="hidden" />
-                            <div className="h-captcha" data-sitekey={recaptchaSiteKey}></div>
+                                <input type="text" name="_gotcha" className="hidden" />
 
-                            <button type="submit" className="pill-button text-white mt-4">
-                                <span className="pill-button-text">
-                                    <i className="nf nf-md-send"></i>&nbsp;Contact Me!
-                                </span>
-                            </button>
-                        </motion.form>
-                    )}
+                                <HCaptcha sitekey={hCaptchaSiteKey} />
 
-                    {success && (
-                        <motion.div
-                            className="success relative bg-transparent p-4 text-center flex items-center justify-center"
+                                <button type="submit" className="pill-button text-white mt-4">
+                                    <span className="pill-button-text">
+                                        <i className="nf nf-md-send"></i>&nbsp;Contact Me!
+                                    </span>
+                                </button>
+                            </form>
+                        </div>
+                    </AnimePresenceChild>
+                )}
+
+                {success && (
+                    <AnimePresenceChild enter={{ opacity: [0, 1] }} exit={{ opacity: [1, 0] }} duration={150}>
+                        <div
                             style={{ height: contactForm.current?.scrollHeight }}
-                            initial={{ x: "-100%" }}
-                            animate={{ x: 0, opacity: 1 }}
-                            exit={{ x: "100%", opacity: 0 }}
+                            className="success relative bg-transparent p-4 text-center flex items-center justify-center"
                         >
                             <h3 className="text-2xl text-green font-bold">Thanks for contacting me!</h3>
-                        </motion.div>
-                    )}
+                        </div>
+                    </AnimePresenceChild>
+                )}
 
-                    {fail && (
-                        <motion.div
-                            style={{ height: contactForm.current?.scrollHeight }}
-                            initial={{ x: "-100%" }}
-                            animate={{ x: 0, opacity: 1 }}
-                            exit={{ x: "100%", opacity: 0 }}
-                        >
-                            <div className="bg-red-600 px-4 py-2 text-center w-fit mx-auto rounded-md">
+                {fail && (
+                    <AnimePresenceChild enter={{ opacity: [0, 1] }} exit={{ opacity: [1, 0] }} duration={150}>
+                        <div className="min-h-svh">
+                            <div className="bg-red-800 text-white px-4 py-2 text-center w-fit mx-auto rounded-md">
                                 There was an error submitting your form. Please try again later.
                             </div>
-                            <button className="pill-button red mx-auto mt-4" onClick={resetForm}>
-                                Try Again
+                            <button
+                                id="reset"
+                                aria-label="Reset Form"
+                                className="pill-button after:bg-red-800! border-red-800! inverse mx-auto mt-4"
+                                onClick={resetForm}
+                            >
+                                <span className="pill-button-text">Reset Form</span>
                             </button>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </LayoutGroup>
+                        </div>
+                    </AnimePresenceChild>
+                )}
+            </AnimePresence>
         </>
     );
 }
