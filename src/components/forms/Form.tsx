@@ -20,16 +20,32 @@ export default function FormGridForm({
 
     const contactForm = useRef<HTMLFormElement>(null);
 
+    function validate(formData: FormData): boolean {
+        let formIsValid = [];
+        for (const [key, value] of formData.entries()) {
+            if (key == "email") {
+                formIsValid.push(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value as string));
+            }
+
+            if (key == "h-captcha-response") {
+                formIsValid.push(value != "");
+            }
+        }
+
+        return formIsValid.includes(false) ? false : true;
+    }
+
     async function submit(formData: FormData): Promise<void> {
         try {
-            // const formData = new FormData(contactForm.current as HTMLFormElement);
-            // console.log(formData.entries());
+            if (!validate(formData)) {
+                setFail(true);
+                return;
+            }
+
             const response = await fetch(formUrl, {
                 method: "POST",
                 body: formData,
             });
-
-            console.log(response);
 
             if (response.ok) {
                 setSuccess(true);
@@ -63,15 +79,17 @@ export default function FormGridForm({
                         <div>
                             <form ref={contactForm} className="relative" action={submit}>
                                 <fieldset>
-                                    <InputField name="name" placeholder="Your Name">
+                                    <InputField required={true} name="name" placeholder="Your Name">
                                         Name
                                     </InputField>
 
-                                    <InputField name="email" placeholder="Your Email">
+                                    <InputField required={true} name="email" placeholder="Your Email">
                                         Email
                                     </InputField>
 
-                                    <TextareaField name="message">Your Message</TextareaField>
+                                    <TextareaField required={true} name="message">
+                                        Your Message
+                                    </TextareaField>
                                 </fieldset>
 
                                 <input type="text" name="_gotcha" className="hidden" />
@@ -90,11 +108,10 @@ export default function FormGridForm({
 
                 {success && (
                     <AnimePresenceChild enter={{ opacity: [0, 1] }} exit={{ opacity: [1, 0] }} duration={150}>
-                        <div
-                            style={{ height: contactForm.current?.scrollHeight }}
-                            className="success relative bg-transparent p-4 text-center flex items-center justify-center"
-                        >
-                            <h3 className="text-2xl text-green font-bold">Thanks for contacting me!</h3>
+                        <div className="success relative bg-transparent p-4 text-center flex items-center justify-center min-h-svh">
+                            <h3 className="text-2xl text-primary dark:text-cyan font-bold">
+                                Thanks for contacting me!
+                            </h3>
                         </div>
                     </AnimePresenceChild>
                 )}
