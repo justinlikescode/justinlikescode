@@ -21,7 +21,7 @@ function preview(text: string, truncate: number = 0) {
 
 const menu_items = defineCollection({
     loader: async (): Promise<any> => {
-        const menuItemsJson = [
+        return [
             {
                 id: "1",
                 label: "about me",
@@ -41,8 +41,6 @@ const menu_items = defineCollection({
                 icon: "nf-oct-mail",
             },
         ];
-
-        return menuItemsJson;
     },
 });
 
@@ -75,6 +73,7 @@ const projects = defineCollection({
                 },
             },
         };
+
         const data = await getData("projects", fields)
             .then((response) => response.json())
             .then((data) => data.data);

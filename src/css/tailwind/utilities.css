@@ -210,7 +210,7 @@
 }
 
 @utility form-input {
-    @apply bg-transparent rounded-md border border-primary dark:border-secondary relative;
+    @apply bg-[#FFF] rounded-md border border-primary dark:border-secondary relative;
     @apply mb-6;
 
     input,
@@ -251,10 +251,11 @@
     @apply no-underline;
     @apply overflow-hidden;
     @apply cursor-pointer;
-    @apply text-white;
 
-    .pill-button-text {
-        @apply z-20;
+    span.pill-button-text {
+        @apply relative;
+        @apply z-30;
+        @apply text-white;
     }
 
     &:after {
@@ -266,22 +267,53 @@
 
     &:hover {
         @apply rounded-lg;
-        @apply text-secondary;
 
         &:after {
             @apply translate-y-full;
             @apply border-transparent text-secondary bg-secondary;
         }
+
+        span.pill-button-text {
+            @apply text-secondary;
+        }
     }
 
-    &.inverse {
+    &.inverse, &.inverse-white {
         &:after {
+            @apply bg-white;
             @apply translate-y-full w-[200%];
         }
 
         &:hover {
             &:after {
                 @apply translate-y-0;
+            }
+        }
+    }
+
+    &.inverse {
+        span.pill-button-text {
+            @apply text-secondary;
+        }
+
+        &:hover {
+            span.pill-button-text {
+                @apply text-white;
+            }
+
+        }
+    }
+
+    &.inverse-white {
+        @apply border-white; 
+
+        span.pill-button-text {
+            @apply text-white;
+        }
+
+        &:hover {
+            span.pill-button-text {
+                @apply text-primary dark:text-darker-900;
             }
         }
     }

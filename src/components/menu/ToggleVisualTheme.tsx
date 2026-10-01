@@ -29,6 +29,7 @@ export default function ToggleVisualTheme({ className = "" }: { className?: stri
             <button
                 name="toggleTheme"
                 className="pointer-events-auto relative inline-flex w-14 max-w-14 rounded-full p-1 bg-primary dark:bg-darker-700 transition-all cursor-pointer"
+                aria-label="Toggle Theme"
                 onClick={() => toggleTheme()}
             >
                 <span

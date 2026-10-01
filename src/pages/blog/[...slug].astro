@@ -30,9 +30,12 @@ export async function getStaticPaths() {
     return paths
 }
 
-const { Title:title, Date:publishDate, Blog_Content:blogContent } = Astro.props
+const { Title:title, Date:publishDate, Blog_Content:blogContent, Preview:preview } = Astro.props
+
+const pageTitle = title + " - justinlikescode"
+const pageDescription = preview
 ---
-<BaseLayout>
+<BaseLayout siteTitle={pageTitle} metaPageDescription={pageDescription}>
     <article class="h-fit relative" itemscope itemtype="https://schema.org/BlogPosting">
         <section class="blog-post-title">
             <div class="container mx-auto relative z-50">

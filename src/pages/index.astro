@@ -22,10 +22,13 @@ const homePageFields = {
 }
 
 const englishLocalization =  await getData('home-page', homePageFields).then(r => r.json()).then(data => data.data)
+
+const pageTitle = "Chicago Based Web Development - justinlikescode"
+const pageDescription = "Meet me, Justin of justinlikescode. A Chicago based web/software developer, media creator, and small business consultant."
 ---
 
 
-<BaseLayout>
+<BaseLayout siteTitle={pageTitle} metaPageDescription={pageDescription}>
     <Intro data={englishLocalization} />
 
     <Services />

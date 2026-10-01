@@ -3,11 +3,12 @@
 * */
 .home-hero {
     /* @apply border-b-2 border-b-primary dark:border-b-secondary; */
-    /* @apply bg-white; */
+    /* @apply bg-white;
 
     @variant dark {
         @apply bg-darker-900;
     }
+    */
 }
 
 .home-hero-container {

@@ -2,13 +2,16 @@
 import BaseLayout from "@layouts/base.astro"
 import SectionHeader from "@components/pageSections/SectionHeader.astro"
 
-import ContactForm from "@components/forms/Form.tsx"
+import ContactForm from "@components/forms/Form"
+
+const pageTitle = "Contact Me - justinlikescode"
+const pageDescription = "A contact form to get in touch with justinlikescode."
 ---
-<BaseLayout title="Contact Me">
-    <section class="container mx-auto max-w-2xl py-16">
+<BaseLayout siteTitle={pageTitle} metaPageDescription={pageDescription}>
+    <section class="container mx-auto w-auto py-16">
         <SectionHeader class="mb-9">
-            <h2 slot="title" class="pb-4!">Contact Me</h2>
+            <h2 slot="title">Contact Me</h2>
         </SectionHeader>
-        <ContactForm client:only="react" />
+        <ContactForm client:only="react" formUrl={import.meta.env.SECRET_FORM_SUBMIT_URL} recaptchaSiteKey={import.meta.env.SECRET_RECAPTCHA_SITE_KEY} />
     </section>
 </BaseLayout>
