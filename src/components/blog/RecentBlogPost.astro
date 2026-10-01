@@ -8,6 +8,7 @@ const { slug, Date:publishDate, Title:title, Preview:preview } = data
 const blogUrl = new URL(`/blog/${slug}`, Astro.url)
 ---
 
+{/*
 <article 
     class="w-full recent-blog-post annotateMe"
     data-annotate-options={`{ 
@@ -15,6 +16,8 @@ const blogUrl = new URL(`/blog/${slug}`, Astro.url)
         "color": "var(--color-secondary)", 
         "brackets": [ "right" ] 
     }`}>
+ */}
+<article class="w-full recent-blog-post">
     <div class="mb-5">
         <h3 class="title">
             <a href={blogUrl} set:html={truncateWords(title, 20)}></a>
@@ -23,7 +26,7 @@ const blogUrl = new URL(`/blog/${slug}`, Astro.url)
         <p class="preview" set:html={preview}></p>
     </div>
 
-    <a href={blogUrl} class="read-more">
+    <a href={blogUrl} class="read-more mt-auto">
         <span class=" annotateUnderline">
             Read More
         </span>
@@ -32,7 +35,6 @@ const blogUrl = new URL(`/blog/${slug}`, Astro.url)
 
 <style>
 @reference "#main.css";
-/* @reference "@css/main.css"; */
 
 .recent-blog-post {
     @apply relative border-l-4 border-primary dark:border-secondary p-5 mb-10 last-of-type:mb-0 transition-all;

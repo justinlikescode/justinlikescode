@@ -252,13 +252,10 @@
     @apply overflow-hidden;
     @apply cursor-pointer;
 
-    .pill-button-text {
+    span.pill-button-text {
         @apply relative;
         @apply z-30;
-
-        span {
-            @apply text-white;
-        }
+        @apply text-white;
     }
 
     &:after {
@@ -276,24 +273,47 @@
             @apply border-transparent text-secondary bg-secondary;
         }
 
-        span {
+        span.pill-button-text {
             @apply text-secondary;
         }
     }
 
-    &.inverse {
-        @apply text-secondary;
+    &.inverse, &.inverse-white {
         &:after {
+            @apply bg-white;
             @apply translate-y-full w-[200%];
         }
 
         &:hover {
-            .pill-button-text {
+            &:after {
+                @apply translate-y-0;
+            }
+        }
+    }
+
+    &.inverse {
+        span.pill-button-text {
+            @apply text-secondary;
+        }
+
+        &:hover {
+            span.pill-button-text {
                 @apply text-white;
             }
 
-            &:after {
-                @apply translate-y-0;
+        }
+    }
+
+    &.inverse-white {
+        @apply border-white; 
+
+        span.pill-button-text {
+            @apply text-white;
+        }
+
+        &:hover {
+            span.pill-button-text {
+                @apply text-primary dark:text-darker-900;
             }
         }
     }
