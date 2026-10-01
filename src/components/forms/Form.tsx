@@ -76,7 +76,7 @@ export default function FormGridForm({
                         exit={{ opacity: [1, 0] }}
                         duration={150}
                     >
-                        <div>
+                        <div className="max-w-2xl mx-auto">
                             <form ref={contactForm} className="relative" action={submit}>
                                 <fieldset>
                                     <InputField required={true} name="name" placeholder="Your Name">
@@ -108,10 +108,13 @@ export default function FormGridForm({
 
                 {success && (
                     <AnimePresenceChild enter={{ opacity: [0, 1] }} exit={{ opacity: [1, 0] }} duration={150}>
-                        <div className="success relative bg-transparent p-4 text-center flex items-center justify-center min-h-svh">
-                            <h3 className="text-2xl text-primary dark:text-cyan font-bold">
-                                Thanks for contacting me!
-                            </h3>
+                        <div className="success relative bg-transparent text-center flex items-start justify-center min-h-svh">
+                            <header className="section-header container mx-auto">
+                                <h2 className="text-4xl">Thanks for messaging me!</h2>
+                                <div className="description">
+                                    <p className="text-xl">I'll get back to you as soon as possible.</p>
+                                </div>
+                            </header>
                         </div>
                     </AnimePresenceChild>
                 )}
