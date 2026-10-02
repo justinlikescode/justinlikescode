@@ -3,7 +3,11 @@
 import { useState } from "react";
 import ThemeContext from "./ThemeContext.tsx";
 
-export default function ThemeProvider({ children }: { children: any }) {
+export default function ThemeProvider({
+    children,
+}: {
+    children: React.ReactElement;
+}): React.ReactElement {
     // Initialize state with the default language (or load from localStorage)
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 

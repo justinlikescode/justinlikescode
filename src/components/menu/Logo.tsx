@@ -5,7 +5,7 @@ import { RoughNotation } from "react-rough-notation";
 
 import ThemeContext from "./ThemeContext.tsx";
 
-export default function Logo() {
+export default function Logo(): React.ReactElement {
     const { theme } = useContext(ThemeContext);
     const [active, setActive] = useState(
         window.location.pathname.includes("/") && window.location.pathname.length == 1,

@@ -3,7 +3,7 @@
 import { useEffect, useContext } from "react";
 import ThemeContext from "./ThemeContext.tsx";
 
-export default function ToggleVisualTheme({ className = "" }: { className?: string }) {
+export default function ToggleVisualTheme(): React.ReactElement {
     const { theme, setTheme } = useContext(ThemeContext);
 
     function toggleTheme() {
@@ -21,7 +21,7 @@ export default function ToggleVisualTheme({ className = "" }: { className?: stri
     }, [theme]);
 
     return (
-        <div className={`flex items-center justify-center ${className}`}>
+        <div className={`flex items-center justify-center`}>
             <label htmlFor="toggleTheme">
                 <span className="sr-only">Light/Dark Mode</span>
             </label>

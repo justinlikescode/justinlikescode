@@ -8,7 +8,7 @@ import MobileMenu from "@components/menu/MobileMenu.tsx";
 
 import { useState, useRef } from "react";
 
-export default function Header({ items }: { items: MenuItemType[] }): any {
+export default function Header({ items }: { items: MenuItemType[] }): React.ReactElement {
     const mobileMenuRef = useRef<HTMLUListElement>(null);
     const mediaQuery = window.matchMedia("(width <= 48rem)");
 
