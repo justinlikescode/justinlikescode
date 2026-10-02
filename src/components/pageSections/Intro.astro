@@ -20,7 +20,7 @@ const imagePortrait = animate('.portrait-image-image', {
         to: 0,
     },
     duration: 350
-})
+}).init()
 
 const imageUnderlay = animate('.portrait-image-underlay', {
     height: {
@@ -28,7 +28,9 @@ const imageUnderlay = animate('.portrait-image-underlay', {
         to: "100%",
     },
     duration: 350
-})
+}).init()
+
+// const { words: introHeaderWords } = splitText('h2.intro-text', { words: true })
 
 const introHeaderSplit  = splitText('h2.intro-text', { words: true })
 const { words: introHeaderWords } = introHeaderSplit
@@ -48,7 +50,7 @@ const introHeaderAnimation = animate(introHeaderWords, {
     delay: stagger(100),
     duration: 150,
     onComplete:() => introHeaderSplit.revert()
-})
+}).init()
 
 const introTextAnimation = animate(introTextWords, {
     opacity: {
@@ -62,7 +64,7 @@ const introTextAnimation = animate(introTextWords, {
     delay: stagger(25),
     duration: 50,
     onComplete:() => introTextSplit.revert()
-})
+}).init()
 
 const introButtonAnimation = animate('.intro .pill-button', {
     opacity: {
@@ -92,7 +94,6 @@ const textTimeline = createTimeline({
 const mainTimeline = createTimeline()
     .sync(imageTimeline)
     .sync(textTimeline, '-=700')
-    .init()
 
 document.addEventListener('astro:page-load', () => {
     mainTimeline.play()
