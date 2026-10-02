@@ -17,11 +17,11 @@ engine.defaults.autoplay = false
 const imagePortrait = animate('.portrait-image-image', {
     x: ["-100%", 0],
     duration: 350
-})
+}).init()
 
 const imageUnderlay = animate('.portrait-image-underlay', {
     height: [0, "100%"]
-})
+}).init()
 
 
 const { words: introHeader } = splitText('h2.intro-text', { words: true })
@@ -32,20 +32,20 @@ const introHeaderAnimation = animate(introHeader, {
     y: ['-100%', '0%'],
     delay: stagger(100),
     duration: 150,
-})
+}).init()
 
 const introTextAnimation = animate(introText, {
     opacity: [0, 1],
     y: ['-100%', '0%'],
     delay: stagger(25),
     duration: 50,
-})
+}).init()
 
 const introButtonAnimation = animate('.intro .pill-button', {
     opacity: [0, 1],
     scaleY: [0, 1],
     duration: 250
-})
+}).init()
 
 const imageTimeline = createTimeline({
     defaults: { duration: 350 }
