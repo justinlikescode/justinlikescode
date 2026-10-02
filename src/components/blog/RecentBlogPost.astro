@@ -17,20 +17,21 @@ const blogUrl = new URL(`/blog/${slug}`, Astro.url)
         "brackets": [ "right" ] 
     }`}>
  */}
-<article class="w-full recent-blog-post">
-    <div class="mb-5">
-        <h3 class="title">
-            <a href={blogUrl} set:html={truncateWords(title, 20)}></a>
-        </h3>
-        <h5 class="date"><em>{blogDate(publishDate)}</em></h5>
-        <p class="preview" set:html={preview}></p>
+<article class="recent-blog-post h-full">
+    <h3 class="title annotateUnderline">
+        <a href={blogUrl} set:html={truncateWords(title, 20)}></a>
+    </h3>
+    <div class="recent-blog-post-text">
+        <h4 class="date"><em>{blogDate(publishDate)}</em></h4>
+        <a href={blogUrl}>
+            <p class="preview" set:html={preview}></p>
+        </a>
     </div>
-
-    <a href={blogUrl} class="read-more mt-auto">
+    {/* <a href={blogUrl} class="read-more mt-auto">
         <span class=" annotateUnderline">
             Read More
         </span>
-    </a>
+    </a> */}
 </article>
 
 <style>

@@ -15,37 +15,66 @@ import { createTimeline, splitText, stagger, animate, engine } from 'animejs';
 engine.defaults.autoplay = false
 
 const imagePortrait = animate('.portrait-image-image', {
-    x: ["-100%", 0],
+    x: {
+        from: "-100%",
+        to: 0,
+    },
     duration: 350
-}).init()
+})
 
 const imageUnderlay = animate('.portrait-image-underlay', {
-    height: [0, "100%"]
-}).init()
+    height: {
+        from: 0,
+        to: "100%",
+    },
+    duration: 350
+})
 
+const introHeaderSplit  = splitText('h2.intro-text', { words: true })
+const { words: introHeaderWords } = introHeaderSplit
 
-const { words: introHeader } = splitText('h2.intro-text', { words: true })
-const { words: introText } = splitText('.intro-textContent', { words: true })
+const introTextSplit = splitText('.intro-textContent', { words: true })
+const { words: introTextWords } = introTextSplit
 
-const introHeaderAnimation = animate(introHeader, {
-    opacity: [0, 1],
-    y: ['-100%', '0%'],
+const introHeaderAnimation = animate(introHeaderWords, {
+    opacity: {
+        from: 0,
+        to: 1,
+    },
+    y: {
+        from: "-100%",
+        to: 0,
+    },
     delay: stagger(100),
     duration: 150,
-}).init()
+    onComplete:() => introHeaderSplit.revert()
+})
 
-const introTextAnimation = animate(introText, {
-    opacity: [0, 1],
-    y: ['-100%', '0%'],
+const introTextAnimation = animate(introTextWords, {
+    opacity: {
+        from: 0,
+        to: 1,
+    },
+    y: {
+        from: "-100%",
+        to: 0,
+    },
     delay: stagger(25),
     duration: 50,
-}).init()
+    onComplete:() => introTextSplit.revert()
+})
 
 const introButtonAnimation = animate('.intro .pill-button', {
-    opacity: [0, 1],
-    scaleY: [0, 1],
+    opacity: {
+        from: 0,
+        to: 1,
+    },
+    scaleY: {
+        from: 0,
+        to: 1,
+    },
     duration: 250
-}).init()
+})
 
 const imageTimeline = createTimeline({
     defaults: { duration: 350 }
@@ -63,8 +92,11 @@ const textTimeline = createTimeline({
 const mainTimeline = createTimeline()
     .sync(imageTimeline)
     .sync(textTimeline, '-=700')
+    .init()
 
-mainTimeline.play()
+document.addEventListener('astro:page-load', () => {
+    mainTimeline.play()
+})
 </script>
 
 <section class="home-hero">
@@ -76,6 +108,7 @@ mainTimeline.play()
                     inferSize={true}
                     alt={greetingText}
                     class="portrait-image-image"
+                    fetchpriority="high"
                     />
 
                 <div class="portrait-image-underlay"></div>
@@ -86,7 +119,7 @@ mainTimeline.play()
             <h2 class="text-center md:text-left pb-4 intro-text">{greetingText}</h2>
 
             <div class="mobile-portrait">
-                <Image src={me} inferSize={true} alt={greetingText} class=""/>
+                <Image fetchpriority="high" loading="lazy" src={me} inferSize={true} alt={greetingText} />
             </div>
 
             <div class="intro-textContent">
