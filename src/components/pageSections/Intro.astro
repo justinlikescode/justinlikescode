@@ -10,7 +10,7 @@ const API_URL = import.meta.env.SECRET_API_URL;
 const me = API_URL + introImage.formats.large.url
 ---
 <script>
-import { createTimeline, splitText, stagger, animate, engine } from 'animejs';
+import { createTimeline, splitText, stagger, animate, engine, utils } from 'animejs';
 
 engine.defaults.autoplay = false
 
@@ -19,8 +19,9 @@ const imagePortrait = animate('.portrait-image-image', {
         from: "-100%",
         to: 0,
     },
+    onBegin: () => utils.$('.portrait-image')[0].classList.remove('opacity-0'),
     duration: 350
-}).init()
+})
 
 const imageUnderlay = animate('.portrait-image-underlay', {
     height: {
@@ -28,9 +29,8 @@ const imageUnderlay = animate('.portrait-image-underlay', {
         to: "100%",
     },
     duration: 350
-}).init()
+})
 
-// const { words: introHeaderWords } = splitText('h2.intro-text', { words: true })
 
 const introHeaderSplit  = splitText('h2.intro-text', { words: true })
 const { words: introHeaderWords } = introHeaderSplit
@@ -49,8 +49,9 @@ const introHeaderAnimation = animate(introHeaderWords, {
     },
     delay: stagger(100),
     duration: 150,
+    onBegin: () => utils.$('.intro')[0].classList.remove('opacity-0'),
     onComplete:() => introHeaderSplit.revert()
-}).init()
+})
 
 const introTextAnimation = animate(introTextWords, {
     opacity: {
@@ -64,19 +65,16 @@ const introTextAnimation = animate(introTextWords, {
     delay: stagger(25),
     duration: 50,
     onComplete:() => introTextSplit.revert()
-}).init()
+})
 
 const introButtonAnimation = animate('.intro .pill-button', {
-    opacity: {
-        from: 0,
-        to: 1,
-    },
+    opacity: [0, 1],
     scaleY: {
         from: 0,
         to: 1,
     },
     duration: 250
-})
+}).init()
 
 const imageTimeline = createTimeline({
     defaults: { duration: 350 }
@@ -103,7 +101,7 @@ document.addEventListener('astro:page-load', () => {
 <section class="home-hero">
     <div class="home-hero-container py-8 md:py-0 z-20! overflow-hidden px-4 xl:px-0">
         <div class="desktop-portrait">
-            <div class="portrait-image">
+            <div class="portrait-image opacity-0">
                 <Image
                     src={me}
                     inferSize={true}
@@ -116,7 +114,7 @@ document.addEventListener('astro:page-load', () => {
             </div>
         </div>
 
-        <div class="intro">
+        <div class="intro opacity-0">
             <h2 class="text-center md:text-left pb-4 intro-text">{greetingText}</h2>
 
             <div class="mobile-portrait">
