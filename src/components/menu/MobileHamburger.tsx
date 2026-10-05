@@ -8,7 +8,7 @@ export default function MobileHamburger({
 }: {
     mobileMenu: React.RefObject<HTMLUListElement>;
     isMobile: boolean;
-}) {
+}): React.ReactElement {
     const [active, setActive] = useState(false);
 
     function openMenu() {

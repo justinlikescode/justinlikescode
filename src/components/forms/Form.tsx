@@ -14,25 +14,54 @@ export default function FormGridForm({
 }: {
     formUrl: string;
     recaptchaSiteKey: string;
-}) {
+}): React.ReactElement {
     const [success, setSuccess] = useState(false);
     const [fail, setFail] = useState(false);
 
     const contactForm = useRef<HTMLFormElement>(null);
 
+    const fields = [
+        {
+            key: "name",
+            type: "text",
+            validation: /^[a-zA-Z., ]+$/,
+            placeholder: "Your Name",
+        },
+        {
+            key: "email",
+            type: "text",
+            validation: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+            placeholder: "Your Email",
+        },
+        {
+            key: "message",
+            type: "textarea",
+            validation: /^[a-zA-Z., ]+$/,
+            placeholder: "Your Message",
+        },
+    ];
+
     function validate(formData: FormData): boolean {
-        let formIsValid = [];
+        let formIsValid: boolean[] = [];
         for (const [key, value] of formData.entries()) {
-            if (key == "email") {
-                formIsValid.push(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value as string));
+            if (key == "h-captcha-response" || key == "g-captcha-response") {
+                formIsValid.push(value != "");
+                continue;
             }
 
-            if (key == "h-captcha-response") {
-                formIsValid.push(value != "");
+            if (key == "_gotcha") {
+                formIsValid.push(value == "");
+                continue;
             }
+
+            const fieldMatch = fields.find((field) => field.key == key);
+
+            if (fieldMatch == undefined) continue;
+
+            formIsValid.push(fieldMatch.validation.test(value as string));
         }
 
-        return formIsValid.includes(false) ? false : true;
+        return !formIsValid.includes(false);
     }
 
     async function submit(formData: FormData): Promise<void> {
@@ -49,11 +78,10 @@ export default function FormGridForm({
 
             if (response.ok) {
                 setSuccess(true);
+                return;
             }
 
-            if (!response.ok) {
-                setFail(true);
-            }
+            setFail(true);
         } catch (error) {
             console.log("Error submitting form");
             console.log(error);
@@ -79,17 +107,24 @@ export default function FormGridForm({
                         <div className="max-w-2xl mx-auto">
                             <form ref={contactForm} className="relative" action={submit}>
                                 <fieldset>
-                                    <InputField required={true} name="name" placeholder="Your Name">
-                                        Name
-                                    </InputField>
-
-                                    <InputField required={true} name="email" placeholder="Your Email">
-                                        Email
-                                    </InputField>
-
-                                    <TextareaField required={true} name="message">
-                                        Your Message
-                                    </TextareaField>
+                                    {fields.map(
+                                        (field: any) =>
+                                            (field.type == "text" && (
+                                                <InputField
+                                                    key={field.key}
+                                                    required={true}
+                                                    name={field.key}
+                                                    placeholder={field.placeholder}
+                                                >
+                                                    {field.placeholder}
+                                                </InputField>
+                                            )) ||
+                                            (field.type == "textarea" && (
+                                                <TextareaField key={field.key} required={true} name={field.key}>
+                                                    {field.placeholder}
+                                                </TextareaField>
+                                            )),
+                                    )}
                                 </fieldset>
 
                                 <input type="text" name="_gotcha" className="hidden" />

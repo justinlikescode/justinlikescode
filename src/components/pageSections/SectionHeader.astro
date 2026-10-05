@@ -21,19 +21,23 @@ document.querySelectorAll('.section-header').forEach(section => {
         const headingAnimation = animate(heading, {
             opacity: [0, 1],
             translateY: ["-100%", 0],
-            duration: 250
+            duration: 250,
+            onComplete: self => self.revert()
         })
 
         animations.push(headingAnimation)
     }
 
     if(tagline != null) {
-        const { chars: taglineSplit } = splitText(tagline, { chars: true })
 
-        const taglineAnimation = animate(taglineSplit, {
+        const taglineSplit = splitText(tagline, { chars: true })
+        const { chars: taglineChars } = taglineSplit
+
+        const taglineAnimation = animate(taglineChars, {
             opacity: [0, 1],
             delay: stagger(5),
             duration: 100,
+            onComplete:() => taglineSplit.revert()
         })
 
         animations.push(taglineAnimation)
@@ -46,6 +50,7 @@ document.querySelectorAll('.section-header').forEach(section => {
                 bounce: 0.4,
                 duration: 250
             }),
+            onComplete: self => self.revert()
         })
 
         animations.push(headerHighlightAnimation)

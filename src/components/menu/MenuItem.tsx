@@ -1,12 +1,14 @@
 "use client";
 
+import type { MenuItemType } from "@lib/types";
+
 import { RoughNotation } from "react-rough-notation";
 
 import { useState, useContext } from "react";
 
 import ThemeContext from "./ThemeContext.tsx";
 
-export default function MenuItem({ href, icon, label, active }: any): any {
+export default function MenuItem({ href, icon, label, active }: MenuItemType): React.ReactElement {
     const [isActive, setIsActive] = useState(active);
     const { theme } = useContext(ThemeContext);
 

@@ -10,42 +10,73 @@ const API_URL = import.meta.env.SECRET_API_URL;
 const me = API_URL + introImage.formats.large.url
 ---
 <script>
-import { createTimeline, splitText, stagger, animate, engine } from 'animejs';
+import { createTimeline, splitText, stagger, animate, engine, utils } from 'animejs';
 
 engine.defaults.autoplay = false
 
 const imagePortrait = animate('.portrait-image-image', {
-    x: ["-100%", 0],
+    x: {
+        from: "-100%",
+        to: 0,
+    },
+    onBegin: () => utils.$('.portrait-image')[0].classList.remove('opacity-0'),
     duration: 350
 })
 
 const imageUnderlay = animate('.portrait-image-underlay', {
-    height: [0, "100%"]
+    height: {
+        from: 0,
+        to: "100%",
+    },
+    duration: 350
 })
 
 
-const { words: introHeader } = splitText('h2.intro-text', { words: true })
-const { words: introText } = splitText('.intro-textContent', { words: true })
+const introHeaderSplit  = splitText('h2.intro-text', { words: true })
+const { words: introHeaderWords } = introHeaderSplit
 
-const introHeaderAnimation = animate(introHeader, {
-    opacity: [0, 1],
-    y: ['-100%', '0%'],
+const introTextSplit = splitText('.intro-textContent', { words: true })
+const { words: introTextWords } = introTextSplit
+
+const introHeaderAnimation = animate(introHeaderWords, {
+    opacity: {
+        from: 0,
+        to: 1,
+    },
+    y: {
+        from: "-100%",
+        to: 0,
+    },
     delay: stagger(100),
     duration: 150,
+    onBegin: () => utils.$('.intro')[0].classList.remove('opacity-0'),
+    onComplete:() => introHeaderSplit.revert()
 })
 
-const introTextAnimation = animate(introText, {
-    opacity: [0, 1],
-    y: ['-100%', '0%'],
+const introTextAnimation = animate(introTextWords, {
+    opacity: {
+        from: 0,
+        to: 1,
+    },
+    y: {
+        from: "-100%",
+        to: 0,
+    },
     delay: stagger(25),
     duration: 50,
+    onComplete:() => introTextSplit.revert()
 })
 
 const introButtonAnimation = animate('.intro .pill-button', {
-    opacity: [0, 1],
-    scaleY: [0, 1],
-    duration: 250
-})
+    scaleY: {
+        from: 0,
+        to: 1,
+    },
+
+    onBegin: () => utils.$('.intro .pill-button').forEach(button => button.classList.remove('opacity-0')),
+    delay: stagger(25),
+    duration: 150
+}).init()
 
 const imageTimeline = createTimeline({
     defaults: { duration: 350 }
@@ -64,36 +95,39 @@ const mainTimeline = createTimeline()
     .sync(imageTimeline)
     .sync(textTimeline, '-=700')
 
-mainTimeline.play()
+document.addEventListener('astro:page-load', () => {
+    mainTimeline.play()
+})
 </script>
 
 <section class="home-hero">
     <div class="home-hero-container py-8 md:py-0 z-20! overflow-hidden px-4 xl:px-0">
         <div class="desktop-portrait">
-            <div class="portrait-image">
+            <div class="portrait-image opacity-0">
                 <Image
                     src={me}
                     inferSize={true}
                     alt={greetingText}
                     class="portrait-image-image"
+                    fetchpriority="high"
                     />
 
                 <div class="portrait-image-underlay"></div>
             </div>
         </div>
 
-        <div class="intro">
+        <div class="intro opacity-0">
             <h2 class="text-center md:text-left pb-4 intro-text">{greetingText}</h2>
 
             <div class="mobile-portrait">
-                <Image src={me} inferSize={true} alt={greetingText} class=""/>
+                <Image fetchpriority="high" loading="lazy" src={me} inferSize={true} alt={greetingText} />
             </div>
 
             <div class="intro-textContent">
                 <Fragment set:html={marked.parse(introText)} />
             </div>
 
-            {buttons.length && buttons.map((button: any) => <PillButton class="flex flex-row text-2xl justify-center items-center mt-8 mx-auto lg:mx-unset" href={button.URL}>{button.Label}</PillButton>)}
+            {buttons.length && buttons.map((button: any) => <PillButton class="opacity-0 flex flex-row text-2xl justify-center items-center mt-8 mx-auto lg:mx-unset" href={button.URL}>{button.Label}</PillButton>)}
         </div>
     </div>
 </section>

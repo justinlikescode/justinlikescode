@@ -11,7 +11,7 @@ export default function MobileMenu({
 }: {
     items: MenuItemType[];
     mobileMenu: React.Ref<HTMLUListElement>;
-}) {
+}): React.ReactElement {
     return (
         <ThemeProvider>
             <ul

@@ -34,12 +34,16 @@ export default defineConfig({
             name: "Roboto Slab",
             cssVariable: "--font-roboto-slab",
             weights: ["100 900"],
+            options: {
+                display: "swap",
+            },
         },
         {
             provider: fontProviders.local(),
             name: "Symbols Nerd Font",
             cssVariable: "--font-symbols-nerd",
             options: {
+                display: "swap",
                 variants: [
                     {
                         weights: ["100 900"],

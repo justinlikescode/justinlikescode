@@ -8,7 +8,7 @@ import ToggleMode from "@components/menu/ToggleVisualTheme.tsx";
 
 import type { MenuItemType } from "@lib/types";
 
-export default function MainMenu({ items }: { items: MenuItemType[] }): any {
+export default function MainMenu({ items }: { items: MenuItemType[] }): React.ReactElement {
     function isActive(href: string): boolean {
         return window.location.pathname.includes(href);
     }
