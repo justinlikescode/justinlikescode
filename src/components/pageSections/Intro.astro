@@ -68,12 +68,14 @@ const introTextAnimation = animate(introTextWords, {
 })
 
 const introButtonAnimation = animate('.intro .pill-button', {
-    opacity: [0, 1],
     scaleY: {
         from: 0,
         to: 1,
     },
-    duration: 250
+
+    onBegin: () => utils.$('.intro .pill-button').forEach(button => button.classList.remove('opacity-0')),
+    delay: stagger(25),
+    duration: 150
 }).init()
 
 const imageTimeline = createTimeline({
@@ -125,7 +127,7 @@ document.addEventListener('astro:page-load', () => {
                 <Fragment set:html={marked.parse(introText)} />
             </div>
 
-            {buttons.length && buttons.map((button: any) => <PillButton class="flex flex-row text-2xl justify-center items-center mt-8 mx-auto lg:mx-unset" href={button.URL}>{button.Label}</PillButton>)}
+            {buttons.length && buttons.map((button: any) => <PillButton class="opacity-0 flex flex-row text-2xl justify-center items-center mt-8 mx-auto lg:mx-unset" href={button.URL}>{button.Label}</PillButton>)}
         </div>
     </div>
 </section>
