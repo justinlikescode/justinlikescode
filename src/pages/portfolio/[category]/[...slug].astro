@@ -28,7 +28,7 @@ export async function getStaticPaths() {
     return staticPaths
 }
 
-const { Title:title, show_url = true, url: external_url, screenshots, description, Technology:techStack, category, preview } = Astro.props
+const { Title:title, show_url = true, external_url, screenshots, description, Technology:techStack, category, preview } = Astro.props
 
 const screenshotsSortedWidest = screenshots.sort((a: any, b: any) => (a.width > b.width) ? 1 : -1).reverse()
 
@@ -147,7 +147,7 @@ const API_URL = import.meta.env.SECRET_API_URL;
                         <Fragment set:html={marked.parse(preview)} />
                     </div>
                 </div>
-                {show_url &&
+                {show_url && external_url != '' &&
                 <div class="flex flex-row items-center justify-center">
                     <div class="table-cell col-span-full">
                         <PillButton class="flex flex-row text-2xl justify-center items-center mt-8 mx-auto lg:mx-unset w-fit" href={external_url} target="_blank">
