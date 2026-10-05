@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { RoughNotation } from "react-rough-notation";
+import { SplitText, animate, stagger } from "@shakibdshy/react-animejs";
 
 import ThemeContext from "./ThemeContext.tsx";
 
 export default function Logo(): React.ReactElement {
-    const { theme } = useContext(ThemeContext);
+    const { theme, loaded, setLoaded } = useContext(ThemeContext);
+
     const [active, setActive] = useState(
         window.location.pathname.includes("/") && window.location.pathname.length == 1,
     );
@@ -27,12 +29,12 @@ export default function Logo(): React.ReactElement {
         >
             <a
                 href="/"
-                className="text-3xl flex items-center no-underline max-w-8/10"
+                className="text-3xl flex min-w-fit items-center no-underline max-w-8/10"
                 onMouseEnter={() => setActive(true)}
                 onMouseLeave={() => checkActive()}
             >
                 <i className={`nf nf-md-developer_board text-3xl text-primary dark:text-cyan mr-2`}></i>
-                <h1 className={`text-primary dark:text-cyan`}>justinlikescode</h1>
+                <h1 className={`logo-text text-primary dark:text-cyan`}>justinlikescode</h1>
             </a>
         </RoughNotation>
     );
