@@ -21,7 +21,7 @@
 
     .section-highlight {
         content: ' ';
-        @apply block h-1 w-45 mx-auto;
+        @apply block h-1 w-50 mx-auto;
         @apply bg-secondary dark:bg-green;
 
         @apply my-0 py-0;

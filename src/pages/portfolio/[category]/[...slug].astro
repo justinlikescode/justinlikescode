@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content'
 import { marked } from 'marked'
 
 import { getTechStackIcon, getCategoryIcon, categoryTitle } from "@lib/helpers";
+import { type TechStackType } from "@lib/types"
 
 import BaseLayout from "@layouts/base.astro"
 
@@ -32,10 +33,6 @@ const { Title:title, show_url = true, external_url, screenshots, description, Te
 
 const screenshotsSortedWidest = screenshots.sort((a: any, b: any) => (a.width > b.width) ? 1 : -1).reverse()
 
-type TechStackType = {
-    id: number,
-    frameworks: string
-}
 
 const stacks = techStack.filter((stack: TechStackType) => {
     if(stack.frameworks == null) return false

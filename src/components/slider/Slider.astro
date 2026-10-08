@@ -1,7 +1,8 @@
 ---
 import NerdFontIcon from '@components/buttons/NerdFontIcon.astro'
 
-import 'swiper/css/bundle' // @ts-nocheck
+// @ts-expect-error
+import 'swiper/css/bundle' 
 
 const { class:classList = "", swiperOptions = {}, arrows = true } = Astro.props
 
