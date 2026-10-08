@@ -210,7 +210,7 @@
 }
 
 @utility form-input {
-    @apply bg-[#FFF] rounded-md border border-primary dark:border-secondary relative;
+    @apply bg-[#FFF] dark:bg-darker-800 rounded-md border border-primary dark:border-secondary relative;
     @apply mb-6;
 
     input,
@@ -226,7 +226,7 @@
         @apply left-2.5 top-1/2;
         @apply -translate-y-1/2;
         @apply cursor-text;
-        @apply text-lg font-bold;
+        @apply text-lg font-bold font-roboto-slab;
         @apply text-primary dark:text-cyan;
 
         @variant peer-not-placeholder-shown {
