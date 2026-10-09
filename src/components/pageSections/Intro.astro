@@ -9,93 +9,97 @@ const { introImage, Content:introText, Greeting:greetingText, buttons } = Astro.
 const API_URL = import.meta.env.SECRET_API_URL;
 const me = API_URL + introImage.formats.large.url
 ---
-<script is:inline data-astro-rerun type="module">
-import { createTimeline, splitText, stagger, animate, engine, utils } from 'https://esm.sh/animejs';
+<script>
+import { createTimeline, splitText, stagger, animate, engine, utils } from 'animejs';
 
 engine.defaults.autoplay = false
 
-const imagePortrait = animate('.portrait-image-image', {
-    x: {
-        from: "-100%",
-        to: 0,
-    },
-    onBegin: () => utils.$('.portrait-image')[0].classList.remove('opacity-0'),
-    duration: 350
+document.addEventListener('astro:page-load', function () {
+    // console.log(utils.$('.intro')[0])
+    if(utils.$('.intro')[0] == undefined) return
+
+    const imagePortrait = animate('.portrait-image-image', {
+        x: {
+            from: "-100%",
+            to: 0,
+        },
+        onBegin: () => utils.$('.portrait-image')[0].classList.remove('opacity-0'),
+        duration: 350
+    })
+
+    const imageUnderlay = animate('.portrait-image-underlay', {
+        height: {
+            from: 0,
+            to: "100%",
+        },
+        duration: 350
+    })
+
+    const introHeaderSplit  = splitText('h2.intro-text', { words: true })
+    const { words: introHeaderWords } = introHeaderSplit
+
+    const introTextSplit = splitText('.intro-textContent', { words: true })
+    const { words: introTextWords } = introTextSplit
+
+    const introHeaderAnimation = animate(introHeaderWords, {
+        opacity: {
+            from: 0,
+            to: 1,
+        },
+        y: {
+            from: "-100%",
+            to: 0,
+        },
+        delay: stagger(100),
+        duration: 150,
+        onBegin: () => utils.$('.intro')[0].classList.remove('opacity-0'),
+        onComplete:() => introHeaderSplit.revert()
+    })
+
+    const introTextAnimation = animate(introTextWords, {
+        opacity: {
+            from: 0,
+            to: 1,
+        },
+        y: {
+            from: "-100%",
+            to: 0,
+        },
+        delay: stagger(25),
+        duration: 50,
+        onComplete:() => introTextSplit.revert()
+    })
+
+    const introButtonAnimation = animate('.intro .pill-button', {
+        scaleY: {
+            from: 0,
+            to: 1,
+        },
+
+        onBegin: () => utils.$('.intro .pill-button').forEach(button => button.classList.remove('opacity-0')),
+        delay: stagger(25),
+        duration: 150
+    }).init()
+
+    const imageTimeline = createTimeline({
+        defaults: { duration: 350 }
+    })
+        .sync(imagePortrait)
+        .sync(imageUnderlay)
+
+    const textTimeline = createTimeline({
+        defaults: { duration: 150 }
+    })
+        .sync(introHeaderAnimation)
+        .sync(introTextAnimation)
+        .sync(introButtonAnimation)
+
+    const mainTimeline = createTimeline()
+        .sync(imageTimeline)
+        .sync(textTimeline, '-=700')
+
+    mainTimeline.play()
 })
-
-const imageUnderlay = animate('.portrait-image-underlay', {
-    height: {
-        from: 0,
-        to: "100%",
-    },
-    duration: 350
-})
-
-
-const introHeaderSplit  = splitText('h2.intro-text', { words: true })
-const { words: introHeaderWords } = introHeaderSplit
-
-const introTextSplit = splitText('.intro-textContent', { words: true })
-const { words: introTextWords } = introTextSplit
-
-const introHeaderAnimation = animate(introHeaderWords, {
-    opacity: {
-        from: 0,
-        to: 1,
-    },
-    y: {
-        from: "-100%",
-        to: 0,
-    },
-    delay: stagger(100),
-    duration: 150,
-    onBegin: () => utils.$('.intro')[0].classList.remove('opacity-0'),
-    onComplete:() => introHeaderSplit.revert()
-})
-
-const introTextAnimation = animate(introTextWords, {
-    opacity: {
-        from: 0,
-        to: 1,
-    },
-    y: {
-        from: "-100%",
-        to: 0,
-    },
-    delay: stagger(25),
-    duration: 50,
-    onComplete:() => introTextSplit.revert()
-})
-
-const introButtonAnimation = animate('.intro .pill-button', {
-    scaleY: {
-        from: 0,
-        to: 1,
-    },
-
-    onBegin: () => utils.$('.intro .pill-button').forEach(button => button.classList.remove('opacity-0')),
-    delay: stagger(25),
-    duration: 150
-}).init()
-
-const imageTimeline = createTimeline({
-    defaults: { duration: 350 }
-})
-    .sync(imagePortrait)
-    .sync(imageUnderlay)
-
-const textTimeline = createTimeline({
-    defaults: { duration: 150 }
-})
-    .sync(introHeaderAnimation)
-    .sync(introTextAnimation)
-    .sync(introButtonAnimation)
-
-const mainTimeline = createTimeline()
-    .sync(imageTimeline)
-    .sync(textTimeline, '-=700')
-
-mainTimeline.play()
 </script>
 
 <section class="home-hero">
