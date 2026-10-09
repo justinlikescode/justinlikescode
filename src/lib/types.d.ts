@@ -5,3 +5,8 @@ export type MenuItemType = {
     scrollTo?: string;
     active?: boolean;
 };
+
+export type TechStackType = {
+    id: number;
+    frameworks: string;
+};

@@ -12,6 +12,10 @@ import Header from "@layouts/header.astro";
 import Main from "@layouts/main.astro";
 import Footer from "@layouts/footer.astro";
 
+// import GoTop from "@components/buttons/GoTop.astro";
+
+import GoTop from "@components/buttons/GoTop.tsx";
+
 
 const strapiMetaImageData =  await getData('home-page', {
     populate: {
@@ -103,6 +107,7 @@ const { siteTitle = 'justin, a dev', metaPageDescription = "", metaPageType = "w
     </head>
     <body>
         <span id="top"></span>
+        <GoTop client:only="react" />
         <Header transition:persist />
         <Main>
             <slot />

@@ -20,7 +20,7 @@ export default function MobileMenu({
             >
                 {items.map(({ href, label, icon }: MenuItemType, index: number) => (
                     <li key={index} className="border-b border-primary dark:border-darker-400 px-4 py-4">
-                        <a href={href} className="text-xl text-primary dark:text-secondary">
+                        <a href={href} className="text-xl text-primary dark:text-secondary menu-item">
                             <i className={`nf ${icon} mr-2`}></i> {label}
                         </a>
                     </li>

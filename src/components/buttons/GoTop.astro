@@ -14,9 +14,9 @@ import NerdFontIcon from '@components/buttons/NerdFontIcon.astro'
     @click="top.scrollIntoView(options)"
     x-show="show"
     x-transition
-    class="fixed bottom-4 right-6 cursor-pointer z-50 bg-dark-800 px-1 py-0 rounded-full">
+    class="fixed bottom-12 right-6 cursor-pointer z-50 px-1 py-0 rounded-full">
     <template x-teleport="#top">
         <div id="scrollTarget" x-intersect:enter="show = false" x-intersect:leave="show = true"></div>
     </template>
-    <NerdFontIcon icon=`nf-fa-arrow_circle_up` class="text-light text-2xl" />
+    <NerdFontIcon icon=`nf-fa-arrow_circle_up` class="text-secondary text-3xl" />
 </div>
