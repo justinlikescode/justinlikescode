@@ -7,71 +7,73 @@ import { animate, engine, splitText, stagger, spring, createTimeline } from 'ani
 
 engine.defaults.autoplay = false
 
-document.querySelectorAll('.section-header').forEach(section => {
-    const fullSection = section.parentElement
-    if(fullSection == null) return
+document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll('.section-header').forEach(section => {
+        const fullSection = section.parentElement
+        if(fullSection == null) return
 
-    const heading = fullSection?.querySelector('.section-header > h2')
-    const tagline = fullSection?.querySelector('.section-header > .description p')
-    const highlight = fullSection?.querySelector('.section-header > .section-highlight')
+        const heading = fullSection?.querySelector('.section-header > h2')
+        const tagline = fullSection?.querySelector('.section-header > .description p')
+        const highlight = fullSection?.querySelector('.section-header > .section-highlight')
 
-    let animations = []
+        let animations = []
 
-    if(heading != null) {
-        const headingAnimation = animate(heading, {
-            opacity: [0, 1],
-            translateY: ["-100%", 0],
-            duration: 250,
-            onComplete: self => self.revert()
-        })
+        if(heading != null) {
+            const headingAnimation = animate(heading, {
+                opacity: [0, 1],
+                translateY: ["-100%", 0],
+                duration: 250,
+                onComplete: self => self.revert()
+            })
 
-        animations.push(headingAnimation)
-    }
-
-    if(tagline != null) {
-
-        const taglineSplit = splitText(tagline, { chars: true })
-        const { chars: taglineChars } = taglineSplit
-
-        const taglineAnimation = animate(taglineChars, {
-            opacity: [0, 1],
-            delay: stagger(5),
-            duration: 100,
-            onComplete:() => taglineSplit.revert()
-        })
-
-        animations.push(taglineAnimation)
-    }
-
-    if(highlight != null) {
-        const headerHighlightAnimation = animate(highlight, {
-            width: ['0%', '200px'],
-            ease: spring({
-                bounce: 0.4,
-                duration: 250
-            }),
-            onComplete: self => self.revert()
-        })
-
-        animations.push(headerHighlightAnimation)
-    }
-
-    const sectionHeaderTimeline = createTimeline()
-
-    animations.forEach(animation => sectionHeaderTimeline.sync(animation))
-
-    const observerOptions = {
-        root: document,
-        threshold: 0.30,
-    }
-
-    const observer = new IntersectionObserver((entries, _observer) => {
-        if (entries[0].isIntersecting) {
-            sectionHeaderTimeline.play()
+            animations.push(headingAnimation)
         }
-    }, observerOptions)
 
-    observer.observe(fullSection)
+        if(tagline != null) {
+
+            const taglineSplit = splitText(tagline, { chars: true })
+            const { chars: taglineChars } = taglineSplit
+
+            const taglineAnimation = animate(taglineChars, {
+                opacity: [0, 1],
+                delay: stagger(5),
+                duration: 100,
+                onComplete:() => taglineSplit.revert()
+            })
+
+            animations.push(taglineAnimation)
+        }
+
+        if(highlight != null) {
+            const headerHighlightAnimation = animate(highlight, {
+                width: ['0%', '200px'],
+                ease: spring({
+                    bounce: 0.4,
+                    duration: 250
+                }),
+                onComplete: self => self.revert()
+            })
+
+            animations.push(headerHighlightAnimation)
+        }
+
+        const sectionHeaderTimeline = createTimeline()
+
+        animations.forEach(animation => sectionHeaderTimeline.sync(animation))
+
+        const observerOptions = {
+            root: document,
+            threshold: 0.30,
+        }
+
+        const observer = new IntersectionObserver((entries, _observer) => {
+            if (entries[0].isIntersecting) {
+                sectionHeaderTimeline.play()
+            }
+        }, observerOptions)
+
+        observer.observe(fullSection)
+    })
 })
 </script>
 
