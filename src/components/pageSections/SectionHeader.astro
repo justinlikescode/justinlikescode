@@ -4,13 +4,14 @@ const { class:classes = "", showHighlight = true } = Astro.props
 
 <script>
 import { animate, engine, splitText, stagger, spring, createTimeline } from 'animejs';
+import { nulldefined } from "@lib/helpers"
 
 engine.defaults.autoplay = false
 
-document.addEventListener('astro:page-load', () => {
+document.addEventListener('astro:page-load', (_) => {
     document.querySelectorAll('.section-header').forEach(section => {
         const fullSection = section.parentElement
-        if(fullSection == null) return
+        if(nulldefined(fullSection)) return
 
         const heading = fullSection?.querySelector('.section-header > h2')
         const tagline = fullSection?.querySelector('.section-header > .description p')

@@ -3,6 +3,8 @@
 import { useEffect, useContext } from "react";
 import ThemeContext from "./ThemeContext.tsx";
 
+import { nulldefined } from "@lib/helpers";
+
 export default function ToggleVisualTheme(): React.ReactElement {
     const { theme, setTheme } = useContext(ThemeContext);
 
@@ -15,7 +17,7 @@ export default function ToggleVisualTheme(): React.ReactElement {
     }
 
     useEffect((): void => {
-        if (theme == undefined || theme == null) return;
+        if (nulldefined(theme)) return;
         localStorage.setItem("theme", theme);
         document.documentElement.dataset.theme = theme;
     }, [theme]);

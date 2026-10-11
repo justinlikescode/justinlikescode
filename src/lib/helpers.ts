@@ -104,3 +104,7 @@ export function categoryTitle(categoryId: string): string {
 
     return capitalizeString(categoryId);
 }
+
+export function nulldefined(thingToTest: any): boolean {
+    return thingToTest == null || thingToTest == undefined;
+}
