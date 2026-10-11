@@ -4,7 +4,7 @@
     }
 
     body {
-        @apply grid-bg;
+        @apply grid-bg min-h-svh;
 
         @variant dark {
             @apply bg-darker-800;
