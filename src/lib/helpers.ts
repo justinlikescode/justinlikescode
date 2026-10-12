@@ -99,6 +99,10 @@ export function categoryTitle(categoryId: string): string {
     return capitalizeString(categoryId);
 }
 
+export function isHome(): boolean {
+    return window.location.pathname.includes("/") && window.location.pathname.length == 1;
+}
+
 export function nulldefined(thingToTest: any): boolean {
     return thingToTest == null || thingToTest == undefined;
 }
