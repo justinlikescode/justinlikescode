@@ -73,7 +73,7 @@ document.addEventListener('astro:page-load', (_) => {
             }
         }, observerOptions)
 
-        observer.observe(fullSection)
+        observer.observe(fullSection as HTMLElement)
     })
 })
 </script>
