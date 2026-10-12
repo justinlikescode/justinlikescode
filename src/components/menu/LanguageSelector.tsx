@@ -8,8 +8,24 @@ import {
 import { Button } from "@components/shadcn/ui/button.tsx";
 
 export default function LanguageSelector(): React.ReactElement {
-    function getEnglishUrl(): string {
-        //
+    function getLocaleUrl(locale: string = ""): string {
+        if (locale == "" && !window.location.pathname.includes("/es")) {
+            return window.location.origin + window.location.pathname.replace("/", "");
+        }
+
+        // we're cleaning up the pathname to just force es to properly be set
+        let pathname = window.location.pathname.replace("/es", "");
+
+        // this way we can dynamically generate languages
+        let localeString = locale != "" ? "/" + locale : "";
+
+        return window.location.origin + localeString + pathname;
+    }
+
+    /*
+     * WARN: DEPRECATED
+     **/
+    function _getEnglishUrl(): string {
         if (!window.location.pathname.includes("/es"))
             return `${window.location.origin}${window.location.pathname}`;
 
@@ -24,7 +40,10 @@ export default function LanguageSelector(): React.ReactElement {
         return window.location.origin + pathname;
     }
 
-    function getSpanishUrl(): string {
+    /*
+     * WARN: DEPRECATED
+     **/
+    function _getSpanishUrl(): string {
         let pathname = window.location.pathname;
 
         if (pathname.charAt(0) != "/") {
@@ -53,10 +72,10 @@ export default function LanguageSelector(): React.ReactElement {
             <DropdownMenuContent className="bg-white">
                 <DropdownMenuGroup>
                     <DropdownMenuItem className="cursor-pointer">
-                        <a href={getEnglishUrl()}>English</a>
+                        <a href={getLocaleUrl()}>English</a>
                     </DropdownMenuItem>
                     <DropdownMenuItem className="cursor-pointer">
-                        <a href={getSpanishUrl()}>Español</a>
+                        <a href={getLocaleUrl("es")}>Español</a>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
             </DropdownMenuContent>
