@@ -6,55 +6,45 @@ import {
     DropdownMenuTrigger,
 } from "@components/shadcn/dropdown-menu";
 import { Button } from "@components/shadcn/ui/button.tsx";
+import { nulldefined } from "@lib/helpers";
 
 export default function LanguageSelector(): React.ReactElement {
+    const locales = [
+        {
+            label: "English",
+            locale: "",
+        },
+        {
+            label: "Español",
+            locale: "es",
+        },
+    ];
+
+    const currentLocale = () => {
+        return window.location.pathname.split("/").filter((item) => item != "")[0];
+    };
+
     function getLocaleUrl(locale: string = ""): string {
-        if (locale == "" && !window.location.pathname.includes("/es")) {
-            return window.location.origin + window.location.pathname.replace("/", "");
+        const origin = window.location.origin;
+        const pathname = window.location.pathname;
+
+        if (locale == currentLocale()) {
+            return origin + pathname;
         }
 
-        // we're cleaning up the pathname to just force es to properly be set
-        let pathname = window.location.pathname.replace("/es", "");
-
-        // this way we can dynamically generate languages
-        let localeString = locale != "" ? "/" + locale : "";
-
-        return window.location.origin + localeString + pathname;
-    }
-
-    /*
-     * WARN: DEPRECATED
-     **/
-    function _getEnglishUrl(): string {
-        if (!window.location.pathname.includes("/es"))
-            return `${window.location.origin}${window.location.pathname}`;
-
-        let pathname = window.location.pathname;
-
-        pathname = pathname.replace("/es", "");
-
-        if (pathname.charAt(0) != "/") {
-            pathname = "/" + pathname;
+        if (nulldefined(locale)) {
+            console.log("should be locale", origin, pathname, locale, currentLocale());
+            return origin + "/" + locale + pathname;
         }
 
-        return window.location.origin + pathname;
-    }
-
-    /*
-     * WARN: DEPRECATED
-     **/
-    function _getSpanishUrl(): string {
-        let pathname = window.location.pathname;
-
-        if (pathname.charAt(0) != "/") {
-            pathname = "/" + pathname;
-        }
-
-        return `${window.location.origin}/es${pathname}`;
+        return origin + pathname.replace("/" + currentLocale(), "");
     }
 
     function getCurrentLang(): string {
-        return window.location.href.includes("/es") ? "es" : "en";
+        const pathname = window.location.pathname.split("/")[1];
+        const current_locale = locales.filter((locale) => locale.locale == pathname)[0].locale;
+
+        return current_locale == "" ? "en" : current_locale;
     }
 
     return (
@@ -71,12 +61,14 @@ export default function LanguageSelector(): React.ReactElement {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-white">
                 <DropdownMenuGroup>
-                    <DropdownMenuItem className="cursor-pointer">
-                        <a href={getLocaleUrl()}>English</a>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="cursor-pointer">
-                        <a href={getLocaleUrl("es")}>Español</a>
-                    </DropdownMenuItem>
+                    {locales.map(({ label, locale: locale_code }: { label: string; locale: string }) => (
+                        <DropdownMenuItem
+                            key={locale_code == "" ? "en" : locale_code}
+                            className="cursor-pointer"
+                        >
+                            <a href={getLocaleUrl(locale_code)}>{label}</a>
+                        </DropdownMenuItem>
+                    ))}
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>
