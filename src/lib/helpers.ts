@@ -106,3 +106,7 @@ export function isHome(): boolean {
 export function nulldefined(thingToTest: any): boolean {
     return thingToTest == null || thingToTest == undefined;
 }
+
+export function isntreal(test: any): boolean {
+    return nulldefined(test);
+}
