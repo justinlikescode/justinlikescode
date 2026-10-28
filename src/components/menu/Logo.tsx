@@ -1,20 +1,19 @@
 "use client";
 
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { RoughNotation } from "react-rough-notation";
-import { SplitText, animate, stagger } from "@shakibdshy/react-animejs";
+
+import { isHome } from "@lib/helpers";
 
 import ThemeContext from "./ThemeContext.tsx";
 
 export default function Logo(): React.ReactElement {
-    const { theme, loaded, setLoaded } = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
 
-    const [active, setActive] = useState(
-        window.location.pathname.includes("/") && window.location.pathname.length == 1,
-    );
+    const [active, setActive] = useState(isHome());
 
     function checkActive(): void {
-        if (window.location.pathname.includes("/") && window.location.pathname.length == 1) return;
+        if (isHome()) return;
 
         setActive(false);
     }

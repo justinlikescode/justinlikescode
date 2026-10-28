@@ -88,19 +88,25 @@ export function capitalizeString(stringInput: string): string {
 }
 
 export function categoryTitle(categoryId: string): string {
-    if (categoryId.includes("2")) {
+    if (/[^a-zA-Z]/g.test(categoryId)) {
+        const splitter = categoryId.replaceAll(/[a-zA-Z]/g, "");
         return categoryId
-            .split("2")
+            .split(splitter)
             .map((word: string): string => capitalizeString(word))
-            .join("2");
-    }
-
-    if (categoryId.includes("/")) {
-        return categoryId
-            .split("/")
-            .map((word: string): string => capitalizeString(word))
-            .join("/");
+            .join(splitter);
     }
 
     return capitalizeString(categoryId);
+}
+
+export function isHome(): boolean {
+    return window.location.pathname.includes("/") && window.location.pathname.length == 1;
+}
+
+export function nulldefined(thingToTest: any): boolean {
+    return thingToTest == null || thingToTest == undefined;
+}
+
+export function isntreal(test: any): boolean {
+    return nulldefined(test);
 }

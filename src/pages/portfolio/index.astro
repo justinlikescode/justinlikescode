@@ -5,7 +5,7 @@ import { getCollection } from 'astro:content';
 import { getCategoryIcon, categoryTitle } from "@lib/helpers";
 
 import BaseLayout from "@layouts/base.astro";
-import SectionHeader from "@components/pageSections/SectionHeader.astro";
+// import SectionHeader from "@components/pageSections/SectionHeader.astro";
 import ProjectCard from "@components/projects/ProjectCard.astro";
 import NerdFontIcon from "@components/buttons/NerdFontIcon.astro";
 
@@ -49,8 +49,8 @@ const pageDescription = "A small collection of previous projects that have been 
 <BaseLayout siteTitle={pageTitle} metaPageDescription={pageDescription}>
     <section class="container mx-auto px-4 xl:px-0">
         {sortedByCount.map(({id, projects}: {id:any, projects:any}) => 
-        <div class="mb-24 first-of-type:mt-12 last-of-type:mb-8">
-            <h2 class="text-4xl mb-8"><NerdFontIcon icon={getCategoryIcon(id)} /> {categoryTitle(id)}</h2>
+        <div class="project-category mb-24 first-of-type:mt-12 last-of-type:mb-8">
+            <h2 class="text-4xl mb-8 project-category-title"><NerdFontIcon icon={getCategoryIcon(id)} /> {categoryTitle(id)}</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-15 gap-y-8">
                 {projects.map((project: any) => <ProjectCard project={project} category={id.replace('/', '-')}  />)}

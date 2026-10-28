@@ -5,6 +5,7 @@
 import MenuItem from "./MenuItem.tsx";
 
 import ToggleMode from "@components/menu/ToggleVisualTheme.tsx";
+import LanguageSelector from "@components/menu/LanguageSelector.tsx";
 
 import type { MenuItemType } from "@lib/types";
 
@@ -29,9 +30,11 @@ export default function MainMenu({ items }: { items: MenuItemType[] }): React.Re
             <li className="main-menu-modeToggle">
                 <ToggleMode />
             </li>
-            {/* <li className="main-menu-language">
+            {/*
+            <li className="main-menu-language">
                 <LanguageSelector />
-            </li> */}
+            </li>
+            */}
         </ul>
     );
 }

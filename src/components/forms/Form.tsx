@@ -5,6 +5,8 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 import { AnimePresence, AnimePresenceChild } from "@shakibdshy/react-animejs";
 
+import { nulldefined } from "@lib/helpers";
+
 import InputField from "./InputField.tsx";
 import TextareaField from "./TextareaField.js";
 
@@ -56,8 +58,9 @@ export default function FormGridForm({
 
             const fieldMatch = fields.find((field) => field.key == key);
 
-            if (fieldMatch == undefined) continue;
+            if (nulldefined(fieldMatch)) continue;
 
+            //@ts-expect-error
             formIsValid.push(fieldMatch.validation.test(value as string));
         }
 

@@ -2,6 +2,7 @@
 import { Image } from "astro:assets"
 import { marked } from 'marked'
 
+
 import PillButton from "@components/buttons/PillButton.astro"
 
 const { introImage, Content:introText, Greeting:greetingText, buttons } = Astro.props.data
@@ -11,12 +12,13 @@ const me = API_URL + introImage.formats.large.url
 ---
 <script>
 import { createTimeline, splitText, stagger, animate, engine, utils } from 'animejs';
+import { nulldefined } from "@lib/helpers"
 
 engine.defaults.autoplay = false
 
 document.addEventListener('astro:page-load', function () {
     // console.log(utils.$('.intro')[0])
-    if(utils.$('.intro')[0] == undefined) return
+    if(nulldefined(utils.$('.intro')[0])) return
 
     const imagePortrait = animate('.portrait-image-image', {
         x: {
