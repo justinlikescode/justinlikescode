@@ -58,7 +58,7 @@ export default defineConfig({
         locales: ["en", "es"],
         defaultLocale: "en",
     },
-    adapter: netlify(),
+    // adapter: netlify(),
     vite: {
         plugins: [tailwindcss()],
     },
